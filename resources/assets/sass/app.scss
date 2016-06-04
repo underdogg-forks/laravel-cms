@@ -1,2 +1,7 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "components/reset";
+@import "components/auth";
 
+.wrapper {
+	width: 100%;
+	min-height: 100%;
+}

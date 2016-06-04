@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html, body {
+  min-height: 100vh; }
+
+.auth {
+  display: block;
+  margin: 0 auto; }
+
+@media screen and (min-width: 768px) {
+  .auth {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%; } }
+
+@media screen and (min-width: 968px) {
+  .auth {
+    width: 30%; } }
+
+.wrapper {
+  width: 100%;
+  min-height: 100%; }
+
+/*# sourceMappingURL=app.css.map */
