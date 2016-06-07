@@ -11,6 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::group(['middleware' => ['web', 'auth']], function() {
+	Route::get('/', function () {
+	    return view('index');
+	});
 });
+
+Route::group(['middleware' => ['web', 'guest']], function() {
+	Route::get('/login', 'UserController@create');
+	Route::post('/login', 'UserController@getLogin');
+});
+
+
+Route::get('/test', 'UserController@create');
+
