@@ -59,4 +59,27 @@ class ThemeController extends Controller
 
         return successResponse('Theme added');
     }
+
+    public function getListOfThemes()
+    {
+        //$dirs = glob(base_path() . '/resources/views/themes/*', GLOB_ONLYDIR);
+
+        $it = new \DirectoryIterator(base_path() . '/resources/views/themes/');
+        $dirs = [];
+        while($it->valid()){
+            if ($it->getBasename() != '.' && $it->getBasename() != '..') {
+                $dirs[] = $it->getBasename();
+            }
+            $it->next();
+        }
+
+        return successResponse('Got theme folders', ['folders' => $dirs]);
+    }
+
+    public function getActive()
+    {
+        $activeTheme = $this->themeModel->whereActive(true)->firstOrFail();
+
+        return successResponse('Retrieved active theme', ['activeTheme' => $activeTheme]);
+    }
 }

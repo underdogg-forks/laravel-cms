@@ -9,6 +9,7 @@ require('./login');
 require('./register');
 
 require('./admin/pages');
+require('./admin/themes');
 
 new Vue({
     el: 'body'

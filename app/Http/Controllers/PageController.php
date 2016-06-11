@@ -73,7 +73,7 @@ class PageController extends Controller
 
         $tvs = Yaml::parse(file_get_contents(base_path() . '/resources/views/themes/' . $theme->name . '/variables.yaml'));
 
-        $tvs = json_decode(json_encode($tvs), false);
+        $tvs = arrayToObj($tvs);
 
         return view('themes.' . $theme->name . '.templates.' . $page->template, compact('tvs'));
     }

@@ -21,6 +21,11 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 	Route::get('pages', 'PageController@pages');
 
 	Route::get('pages/{slug}', 'PageController@show');
+
+    Route::get('themes', 'ThemeController@getListOfThemes');
+
+    Route::post('option', 'OptionController@option');
+    Route::post('option/update', 'OptionController@update');
 });
 
 Route::group(['middleware' => ['web', 'guest']], function() {
@@ -37,4 +42,3 @@ Route::get('/logout', function() {
 
     return redirect('/login');
 });
-

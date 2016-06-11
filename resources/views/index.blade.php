@@ -33,11 +33,7 @@
                         @include('admin.pages')
                     </div>
                     <div role="tabpanel" class="tab-pane" id="themes">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Themes
-                            </div>
-                        </div>
+                        @include('admin.themes')
                     </div>
                     <div role="tabpanel" class="tab-pane" id="settings">
                         <div class="panel panel-default">

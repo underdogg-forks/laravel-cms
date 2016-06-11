@@ -11811,6 +11811,41 @@ Vue.component('pages', {
 },{}],5:[function(require,module,exports){
 'use strict';
 
+Vue.component('themes', {
+    ready: function ready() {
+        this.getThemeFolders();
+        this.getActiveTheme();
+    },
+    data: function data() {
+        return {
+            folders: [],
+            activeTheme: ''
+        };
+    },
+
+
+    methods: {
+        getThemeFolders: function getThemeFolders() {
+            this.$http.get('/themes').then(function (response) {
+                this.folders = response.data.folders;
+            }.bind(this));
+        },
+        getActiveTheme: function getActiveTheme() {
+            this.$http.post('/option', { 'option': 'activeTheme' }).then(function (response) {
+                this.activeTheme = response.data.option;
+            }.bind(this));
+        },
+        setActiveTheme: function setActiveTheme() {
+            this.$http.post('/option/update', { 'option': 'activeTheme', 'value': this.activeTheme }).then(function (response) {
+                this.getActiveTheme();
+            }.bind(this));
+        }
+    }
+});
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
 var Vue = require('vue');
 Vue.use(require('vue-resource'));
 
@@ -11822,12 +11857,13 @@ require('./login');
 require('./register');
 
 require('./admin/pages');
+require('./admin/themes');
 
 new Vue({
     el: 'body'
 });
 
-},{"./admin/pages":4,"./login":6,"./register":7,"vue":3,"vue-resource":2}],6:[function(require,module,exports){
+},{"./admin/pages":4,"./admin/themes":5,"./login":7,"./register":8,"vue":3,"vue-resource":2}],7:[function(require,module,exports){
 'use strict';
 
 Vue.component('login', {
@@ -11855,7 +11891,7 @@ Vue.component('login', {
     }
 });
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Vue.component('register', {
@@ -11886,6 +11922,6 @@ Vue.component('register', {
     }
 });
 
-},{}]},{},[5]);
+},{}]},{},[6]);
 
 //# sourceMappingURL=bootstrap.js.map
