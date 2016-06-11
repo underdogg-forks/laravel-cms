@@ -16,3 +16,17 @@ function validateAjaxForm($fields, $rules)
 
     return true;
 }
+
+function successResponse($message, $extra = null)
+{
+    $data = [
+        'status' => 'success',
+        'message' => $message
+    ];
+
+    if (isset($extra)) {
+        $data = array_merge($data, $extra);
+    }
+
+    return response()->json($data);
+}

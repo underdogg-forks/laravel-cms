@@ -18,6 +18,8 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 	Route::get('/', function () {
 	    return view('index');
 	});
+
+	Route::get('pages/{slug}', 'PageController@show');
 });
 
 Route::group(['middleware' => ['web', 'guest']], function() {
