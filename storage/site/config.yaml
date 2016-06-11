@@ -1,3 +1,2 @@
-activeTheme: neher
-site:
-    title: 'My CMS Website'
+site_title: My CMS Website
+active_theme: neher

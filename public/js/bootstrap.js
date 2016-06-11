@@ -11791,10 +11791,19 @@ module.exports = Vue;
 Vue.component('pages', {
     ready: function ready() {
         this.getPages();
+        this.getTemplates();
     },
     data: function data() {
         return {
-            pages: []
+            pages: [],
+            templates: [],
+            errors: [],
+            model: {
+                name: '',
+                template: ''
+            },
+
+            active: {}
         };
     },
 
@@ -11803,7 +11812,33 @@ Vue.component('pages', {
         getPages: function getPages() {
             this.$http.get('/pages').then(function (response) {
                 this.pages = response.data.pages;
+                if (typeof this.active.name === 'undefined') {
+                    this.active = this.pages[0];
+                }
             }.bind(this));
+        },
+        getTemplates: function getTemplates() {
+            this.$http.get('/templates').then(function (response) {
+                this.templates = response.data.templates;
+            }.bind(this));
+        },
+        newPage: function newPage() {
+            this.$http.post('/pages/new', this.model).then(function (response) {
+                if (response.data.status == 'error') {
+                    this.errors = response.data.errors;
+                } else {
+                    this.getPages();
+                    $('#newPage').modal('toggle');
+                }
+            }.bind(this));
+        },
+        setActive: function setActive(id) {
+            for (var i = 0; i < this.pages.length; i++) {
+                if (this.pages[i].id == id) {
+                    this.active = this.pages[i];
+                    break;
+                }
+            }
         }
     }
 });
@@ -11831,12 +11866,12 @@ Vue.component('themes', {
             }.bind(this));
         },
         getActiveTheme: function getActiveTheme() {
-            this.$http.post('/option', { 'option': 'activeTheme' }).then(function (response) {
+            this.$http.post('/option', { 'option': 'active_theme' }).then(function (response) {
                 this.activeTheme = response.data.option;
             }.bind(this));
         },
         setActiveTheme: function setActiveTheme() {
-            this.$http.post('/option/update', { 'option': 'activeTheme', 'value': this.activeTheme }).then(function (response) {
+            this.$http.post('/option/update', { 'option': 'active_theme', 'value': this.activeTheme }).then(function (response) {
                 this.getActiveTheme();
             }.bind(this));
         }

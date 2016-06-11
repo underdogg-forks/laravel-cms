@@ -44,9 +44,8 @@ class PageController extends Controller
 
     public function create()
     {
-        $validate = validateAjaxForm($this->request-all(), [
+        $validate = validateAjaxForm($this->request->all(), [
             'name'     => 'required|unique:pages',
-            'slug'     => 'required|unique:pages',
             'template' => 'required'
         ]);
 

@@ -30,10 +30,9 @@
             <div class="col-md-9">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="pages">
-                        @include('admin.pages')
                     </div>
                     <div role="tabpanel" class="tab-pane" id="themes">
-                        @include('admin.themes')
+
                     </div>
                     <div role="tabpanel" class="tab-pane" id="settings">
                         <div class="panel panel-default">

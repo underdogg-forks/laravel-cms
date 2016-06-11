@@ -14,15 +14,24 @@
 use Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware' => ['web', 'auth']], function() {
-	Route::get('/', function () {
+    Route::get('/', function() {
+        return redirect('/admin');
+    });
+
+	Route::get('/admin', function() {
 	    return view('index');
 	});
 
-	Route::get('pages', 'PageController@pages');
+    Route::group(['prefix' => 'admin'], function() {
+       Route::get('pages', 'AdminController@getPages');
+    });
 
-	Route::get('pages/{slug}', 'PageController@show');
+    Route::get('pages', 'PageController@pages');
+    Route::post('pages/new', 'PageController@create');
 
     Route::get('themes', 'ThemeController@getListOfThemes');
+
+    Route::get('templates', 'ThemeController@getListOfTemplates');
 
     Route::post('option', 'OptionController@option');
     Route::post('option/update', 'OptionController@update');
@@ -42,3 +51,5 @@ Route::get('/logout', function() {
 
     return redirect('/login');
 });
+
+Route::get('{slug}', 'PageController@show');

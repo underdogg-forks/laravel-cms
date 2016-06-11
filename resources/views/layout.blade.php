@@ -19,11 +19,16 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">CMS</a>
+				<a class="navbar-brand" href="/admin">CMS</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				@if (Auth::check())
+				<ul class="nav navbar-nav">
+					<li><a href="/admin/pages">Pages</a></li>
+				</ul>
+				@endif
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::check())
 					<li><a href="/logout">Logout</a></li>

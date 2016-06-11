@@ -76,6 +76,21 @@ class ThemeController extends Controller
         return successResponse('Got theme folders', ['folders' => $dirs]);
     }
 
+    public function getListOfTemplates()
+    {
+        $files = scandir(base_path() . '/resources/views/themes/' . getSiteOption('active_theme') . '/templates/');
+
+        $templates = [];
+
+        foreach ($files as $file) {
+            if (!is_dir($file)) {
+                $templates[] = explode('.', $file)[0];
+            }
+        }
+
+        return successResponse('Got theme folders', ['templates' => $templates]);
+    }
+
     public function getActive()
     {
         $activeTheme = $this->themeModel->whereActive(true)->firstOrFail();

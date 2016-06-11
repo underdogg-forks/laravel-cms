@@ -20,14 +20,14 @@ Vue.component('themes', {
         },
 
         getActiveTheme() {
-            this.$http.post('/option', {'option': 'activeTheme'})
+            this.$http.post('/option', {'option': 'active_theme'})
                 .then(function(response) {
                     this.activeTheme = response.data.option;
                 }.bind(this));
         },
 
         setActiveTheme() {
-            this.$http.post('/option/update', {'option': 'activeTheme', 'value': this.activeTheme})
+            this.$http.post('/option/update', {'option': 'active_theme', 'value': this.activeTheme})
                 .then(function(response) {
                     this.getActiveTheme();
                 }.bind(this));
