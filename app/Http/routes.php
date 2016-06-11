@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::group(['middleware' => ['web', 'auth']], function() {
 	Route::get('/', function () {
 	    return view('index');
@@ -18,10 +20,22 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 });
 
 Route::group(['middleware' => ['web', 'guest']], function() {
-	Route::get('/login', 'UserController@create');
-	Route::post('/login', 'UserController@getLogin');
+	Route::get('/login', 'UserController@login');
+	Route::post('/login', 'UserController@login');
+
+	Route::get('/register', 'UserController@create');
+	Route::post('/register', 'UserController@create');
 });
 
 
-Route::get('/test', 'UserController@create');
+Route::get('/logout', function() {
+    Auth::logout();
+
+    return redirect('/login');
+});
+
+
+Route::get('/test', function() {
+    return response()->json(Auth::check());
+});
 
