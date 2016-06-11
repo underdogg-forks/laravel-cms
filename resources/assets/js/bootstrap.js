@@ -8,6 +8,8 @@ window.Vue = Vue || require('vue');
 require('./login');
 require('./register');
 
+require('./admin/pages');
+
 new Vue({
     el: 'body'
 });

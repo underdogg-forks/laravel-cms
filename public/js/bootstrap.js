@@ -11788,6 +11788,29 @@ module.exports = Vue;
 },{"_process":1}],4:[function(require,module,exports){
 'use strict';
 
+Vue.component('pages', {
+    ready: function ready() {
+        this.getPages();
+    },
+    data: function data() {
+        return {
+            pages: []
+        };
+    },
+
+
+    methods: {
+        getPages: function getPages() {
+            this.$http.get('/pages').then(function (response) {
+                this.pages = response.data.pages;
+            }.bind(this));
+        }
+    }
+});
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
 var Vue = require('vue');
 Vue.use(require('vue-resource'));
 
@@ -11798,11 +11821,13 @@ window.Vue = Vue || require('vue');
 require('./login');
 require('./register');
 
+require('./admin/pages');
+
 new Vue({
     el: 'body'
 });
 
-},{"./login":5,"./register":6,"vue":3,"vue-resource":2}],5:[function(require,module,exports){
+},{"./admin/pages":4,"./login":6,"./register":7,"vue":3,"vue-resource":2}],6:[function(require,module,exports){
 'use strict';
 
 Vue.component('login', {
@@ -11830,7 +11855,7 @@ Vue.component('login', {
     }
 });
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 Vue.component('register', {
@@ -11861,6 +11886,6 @@ Vue.component('register', {
     }
 });
 
-},{}]},{},[4]);
+},{}]},{},[5]);
 
 //# sourceMappingURL=bootstrap.js.map

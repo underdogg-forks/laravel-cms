@@ -12,12 +12,13 @@
 */
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 
 Route::group(['middleware' => ['web', 'auth']], function() {
 	Route::get('/', function () {
 	    return view('index');
 	});
+
+	Route::get('pages', 'PageController@pages');
 
 	Route::get('pages/{slug}', 'PageController@show');
 });

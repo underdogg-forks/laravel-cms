@@ -11,15 +11,15 @@
 
                     <div class="cms-nav-pill">
                         <div class="panel-body">
-                            <ul class="nav">
-                                <li class="active">
-                                    <a href="#">Pages</a>
+                            <ul class="nav" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#pages" role="tab" data-toggle="tab" aria-controls="pages">Pages</a>
                                 </li>
-                                <li>
-                                    <a href="#">Themes</a>
+                                <li role="presentation">
+                                    <a href="#themes" role="tab" data-toggle="tab" aria-controls="themes">Themes</a>
                                 </li>
-                                <li>
-                                    <a href="#">Settings</a>
+                                <li role="presentation">
+                                    <a href="#settings" role="tab" data-toggle="tab" aria-controls="settings">Settings</a>
                                 </li>
                             </ul>
                         </div>
@@ -28,12 +28,23 @@
             </div>
 
             <div class="col-md-9">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Pages
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="pages">
+                        @include('admin.pages')
                     </div>
-                    <div class="panel-body">
-
+                    <div role="tabpanel" class="tab-pane" id="themes">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Themes
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="settings">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Settings
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
