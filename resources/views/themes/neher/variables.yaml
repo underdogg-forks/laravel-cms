@@ -1,0 +1,10 @@
+index:
+  name: ozzie
+  age: 10
+
+header:
+  namespace: true
+  title:
+    caption: Title
+    type: text
+    default: A Default Title

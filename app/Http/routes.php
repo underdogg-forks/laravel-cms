@@ -37,7 +37,3 @@ Route::get('/logout', function() {
     return redirect('/login');
 });
 
-Route::get('/test/{token?}', function($token, Request $request) {
-
-});
-

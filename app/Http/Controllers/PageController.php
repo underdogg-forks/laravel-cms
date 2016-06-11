@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use Cocur\Slugify\Slugify;
+use Illuminate\Support\Facades\Storage;
+
+use Symfony\Component\Yaml\Yaml;
 
 class PageController extends Controller
 {
@@ -68,6 +71,10 @@ class PageController extends Controller
 
         $theme = $this->themeModel->whereActive(true)->firstOrFail();
 
-        return view('themes.' . $theme->name . '.templates.' . $page->template);
+        $tvs = Yaml::parse(file_get_contents(base_path() . '/resources/views/themes/' . $theme->name . '/variables.yaml'));
+
+        $tvs = json_decode(json_encode($tvs), false);
+
+        return view('themes.' . $theme->name . '.templates.' . $page->template, compact('tvs'));
     }
 }
