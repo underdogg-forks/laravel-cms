@@ -5,3 +5,20 @@
 	width: 100%;
 	min-height: 100%;
 }
+
+.cms-nav-pill {
+	.panel-body {
+		padding: 0;
+	}
+
+	a {
+		border-bottom: 1px solid #eee;
+		border-left: 3px solid transparent;
+	}
+
+	.active {
+		a {
+			border-left: 3px solid #4A90E2;
+		}
+	}
+}

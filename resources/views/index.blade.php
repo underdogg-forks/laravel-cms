@@ -9,18 +9,31 @@
                         Options
                     </div>
 
+                    <div class="cms-nav-pill">
+                        <div class="panel-body">
+                            <ul class="nav">
+                                <li class="active">
+                                    <a href="#">Pages</a>
+                                </li>
+                                <li>
+                                    <a href="#">Themes</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Pages
+                    </div>
                     <div class="panel-body">
-                        <ul class="nav">
-                            <li class="active">
-                                <a href="#">Pages</a>
-                            </li>
-                            <li>
-                                <a href="#">Templates</a>
-                            </li>
-                            <li>
-                                <a href="#">Variables</a>
-                            </li>
-                        </ul>
+
                     </div>
                 </div>
             </div>

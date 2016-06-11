@@ -26,4 +26,14 @@ html, body {
   width: 100%;
   min-height: 100%; }
 
+.cms-nav-pill .panel-body {
+  padding: 0; }
+
+.cms-nav-pill a {
+  border-bottom: 1px solid #eee;
+  border-left: 3px solid transparent; }
+
+.cms-nav-pill .active a {
+  border-left: 3px solid #4A90E2; }
+
 /*# sourceMappingURL=app.css.map */
