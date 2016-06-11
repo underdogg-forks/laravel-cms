@@ -9,6 +9,7 @@ use App\User;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class UserController
@@ -60,14 +61,14 @@ class UserController extends Controller
             return view('auth.register');
         }
 
-        $validator = Validator::make($this->request->all(), [
+        $valid = validateAjaxForm($this->request->all(), [
             'name' => 'required',
             'username' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
+        if ($valid instanceof JsonResponse) {
+            return $valid;
         }
 
         $user = $this->userModel->create([
@@ -96,17 +97,13 @@ class UserController extends Controller
             return view('auth.login');
         }
 
-        $validator = Validator::make($this->request->all(), [
+        $valid = validateAjaxForm($this->request->all(), [
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid credentials',
-                'errors' => $validator->errors()
-            ]);
+        if ($valid instanceof JsonResponse) {
+            return $valid;
         }
 
         if ($this->auth->attempt($this->request->all())) {

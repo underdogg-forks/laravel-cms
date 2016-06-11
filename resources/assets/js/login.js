@@ -16,7 +16,7 @@ Vue.component('login', {
                if (response.data.status == 'error') {
                    this.errors = response.data.errors;
                } else {
-                   window.location.href = '/dashboard';
+                   window.location.href = '/';
                }
             }.bind(this));
         }

@@ -12,6 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 Route::group(['middleware' => ['web', 'auth']], function() {
 	Route::get('/', function () {
@@ -34,8 +35,7 @@ Route::get('/logout', function() {
     return redirect('/login');
 });
 
+Route::get('/test/{token?}', function($token, Request $request) {
 
-Route::get('/test', function() {
-    return response()->json(Auth::check());
 });
 

@@ -17,9 +17,7 @@ Vue.component('register', {
                     if (response.data.status == 'error') {
                         this.errors = response.data.errors;
                     } else {
-                        console.log(response.data);
-                        this.errors = response.data;
-                        //window.location.href = '/dashboard';
+                        window.location.href = '/';
                     }
                 }.bind(this)).catch(function(error) {
                     console.log(error);
