@@ -51,12 +51,21 @@ Vue.component('pages', {
         },
 
         setActive(id) {
+
+
+            //TODO: Check for changes
+
             for (var i = 0; i < this.pages.length; i++) {
                 if (this.pages[i].id == id) {
-                    this.active = this.pages[i]
+                    this.active = this.pages[i];
                     break;
                 }
             }
+
+        },
+
+        handleSaveModal(action) {
+
         }
     }
 });

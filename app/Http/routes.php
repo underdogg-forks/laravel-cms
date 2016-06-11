@@ -24,6 +24,7 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 
     Route::group(['prefix' => 'admin'], function() {
        Route::get('pages', 'AdminController@getPages');
+        Route::get('themes', 'AdminController@getThemes');
     });
 
     Route::get('pages', 'PageController@pages');

@@ -93,6 +93,8 @@
                     </div>
                 </div>
             </div>
+
+            @include('admin.saveWarning')
         </pages>
     </div>
 @endsection

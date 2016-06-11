@@ -12,4 +12,9 @@ class AdminController extends Controller
     {
         return view('admin.pages');
     }
+
+    public function getThemes()
+    {
+        return view('admin.themes');
+    }
 }
