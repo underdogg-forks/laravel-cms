@@ -15,3 +15,20 @@ function getSiteOption($option)
 
     return $config[$option];
 }
+
+function thdg()
+{
+    $config = Yaml::parse(file_get_contents(base_path() . '/resources/views/themes/neher/variables.yaml'));
+
+    $headers = [];
+
+    foreach ($config['index'] as $category => $fields) {
+        foreach ($fields as $field => $properties) {
+            foreach($properties as $key => $value) {
+
+            }
+        }
+    }
+
+    dd();
+}

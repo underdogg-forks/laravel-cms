@@ -1,6 +1,16 @@
-index:
-  name: ozzie
-  age: 10
+blog:
+  header:
+    title:
+        type: text
+        caption: Title
+    subtitle:
+        type: text
+        caption: Subtitle
+
+  footer:
+    copy:
+      type: text
+      caption: Copyright Text
 
 header:
   namespace: true

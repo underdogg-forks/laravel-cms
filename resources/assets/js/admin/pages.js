@@ -3,6 +3,7 @@ Vue.component('pages', {
     ready() {
         this.getPages();
         this.getTemplates();
+        this.getTemplateVariables();
     },
 
    data() {
@@ -16,7 +17,9 @@ Vue.component('pages', {
            },
 
            active: {
-           }
+           },
+
+           templateVariables: []
        }
    },
 
@@ -64,8 +67,11 @@ Vue.component('pages', {
 
         },
 
-        handleSaveModal(action) {
-
+        getTemplateVariables() {
+            this.$http.post('/template-variables', {'template': this.active.template})
+                .then(function(response) {
+                    this.templateVariables = response.data.categories;
+                }.bind(this));
         }
     }
 });

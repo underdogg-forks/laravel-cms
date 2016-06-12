@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Yaml\Yaml;
 
 class ThemeController extends Controller
 {
@@ -89,6 +90,15 @@ class ThemeController extends Controller
         }
 
         return successResponse('Got theme folders', ['templates' => $templates]);
+    }
+
+    public function getListOfTemplateVariables()
+    {
+        $config = Yaml::parse(file_get_contents(base_path() . '/resources/views/themes/' . getSiteOption('active_theme') . '/variables.yaml'));
+
+        $categories = $config['blog'];
+
+        return successResponse('Retrieved template variables', ['categories' => $categories]);
     }
 
     public function getActive()

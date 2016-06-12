@@ -34,6 +34,8 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 
     Route::get('templates', 'ThemeController@getListOfTemplates');
 
+    Route::post('template-variables', 'ThemeController@getListOfTemplateVariables');
+
     Route::post('option', 'OptionController@option');
     Route::post('option/update', 'OptionController@update');
 });
@@ -51,6 +53,10 @@ Route::get('/logout', function() {
     Auth::logout();
 
     return redirect('/login');
+});
+
+Route::get('tst', function() {
+    thdg();
 });
 
 Route::get('{slug}', 'PageController@show');

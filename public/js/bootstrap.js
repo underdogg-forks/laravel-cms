@@ -11792,6 +11792,7 @@ Vue.component('pages', {
     ready: function ready() {
         this.getPages();
         this.getTemplates();
+        this.getTemplateVariables();
     },
     data: function data() {
         return {
@@ -11803,7 +11804,9 @@ Vue.component('pages', {
                 template: ''
             },
 
-            active: {}
+            active: {},
+
+            templateVariables: []
         };
     },
 
@@ -11843,7 +11846,11 @@ Vue.component('pages', {
                 }
             }
         },
-        handleSaveModal: function handleSaveModal(action) {}
+        getTemplateVariables: function getTemplateVariables() {
+            this.$http.post('/template-variables', { 'template': this.active.template }).then(function (response) {
+                this.templateVariables = response.data.categories;
+            }.bind(this));
+        }
     }
 });
 
