@@ -7,6 +7,7 @@
 	<title>@yield('title')</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/lumen/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/app.css">
+	<link rel="stylesheet" href="/css/trix.css">
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -49,5 +50,6 @@
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="/js/bootstrap.js"></script>
+	<script src="/js/trix.js"></script>
 </body>
 </html>

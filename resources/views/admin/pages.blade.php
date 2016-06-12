@@ -56,7 +56,8 @@
 
                             <div class="form-group">
                                 <label>Content:</label>
-                                <textarea class="form-control"></textarea>
+                                <input type="hidden" id="content" v-model="active.content">
+                                <trix-editor class="trix-content" input="content"></trix-editor>
                             </div>
                         </form>
 
