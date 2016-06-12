@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Theme;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,31 +10,15 @@ use Symfony\Component\Yaml\Yaml;
 
 class ThemeController extends Controller
 {
-    private $themeModel;
-
     private $request;
 
     /**
      * ThemeController constructor.
-     * @param Theme $themeModel
      * @param Request $request
      */
-    public function __construct(Theme $themeModel, Request $request)
+    public function __construct(Request $request)
     {
-        $this->themeModel = $themeModel;
         $this->request = $request;
-    }
-
-    /**
-     * Return all themes
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function themes()
-    {
-        $themes = $this->themeModel->latest()->get();
-
-        return successResponse('Retrieved themes', ['themes' => $themes]);
     }
 
     /**

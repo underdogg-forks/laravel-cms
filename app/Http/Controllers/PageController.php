@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Page;
-use App\Theme;
 use App\TV;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,21 +20,18 @@ class PageController extends Controller
 
     private $request;
 
-    private $themeModel;
     private $tvModel;
 
     /**
      * PageController constructor.
      * @param Page $pageModel
      * @param Request $request
-     * @param Theme $themeModel
      * @param TV $tvModel
      */
-    public function __construct(Page $pageModel, Request $request, Theme $themeModel, TV $tvModel)
+    public function __construct(Page $pageModel, Request $request, TV $tvModel)
     {
         $this->pageModel = $pageModel;
         $this->request = $request;
-        $this->themeModel = $themeModel;
         $this->tvModel = $tvModel;
     }
 
