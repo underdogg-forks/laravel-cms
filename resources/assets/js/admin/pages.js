@@ -3,7 +3,9 @@ Vue.component('pages', {
     ready() {
         this.getPages();
         this.getTemplates();
-        this.getTemplateVariableFields();
+        setTimeout(function() {
+            this.getTemplateVariableFields();
+        }.bind(this), 200);
     },
 
    data() {
@@ -30,7 +32,7 @@ Vue.component('pages', {
             this.$http.get('/pages')
                 .then(function(response) {
                     this.pages = response.data.pages;
-                    if (typeof this.active.name === 'undefined') {
+                    if (typeof this.active.name === 'undefined' && this.pages.length != 0) {
                         this.active = this.pages[0];
                     }
                 }.bind(this));
@@ -63,6 +65,7 @@ Vue.component('pages', {
             for (var i = 0; i < this.pages.length; i++) {
                 if (this.pages[i].id == id) {
                     this.active = this.pages[i];
+                    this.getTemplateVariableFields();
                     break;
                 }
             }
@@ -70,29 +73,39 @@ Vue.component('pages', {
         },
 
         getTemplateVariableFields() {
+            console.log(this.active.template);
             this.$http.post('/template-variables', {'template': this.active.template})
                 .then(function(response) {
                     this.templateVariables = response.data.categories;
 
-                    var tv = {};
+                    this.$http.get('/pages/' + this.active.id + '/tvs')
+                        .then(function(response) {
 
-                    for (var category in this.templateVariables) {
-                        if (this.templateVariables.hasOwnProperty(category)) {
-                            if (typeof tv[category] === 'undefined') {
-                                tv[category] = {};
+                            var tv = response.data.tvs;
 
-                                for (var field in this.templateVariables[category]) {
-                                    if (this.templateVariables[category].hasOwnProperty(field)) {
-                                        if (typeof tv[category][field] === 'undefined') {
-                                            tv[category][field] = '';
+                            if (Array.isArray(tv) && tv.length == 0) {
+                                tv = {};
+                            }
+
+                            for (var category in this.templateVariables) {
+                                if (this.templateVariables.hasOwnProperty(category)) {
+                                    if (typeof tv[category] === 'undefined') {
+                                        tv[category] = {};
+
+                                        for (var field in this.templateVariables[category]) {
+                                            if (this.templateVariables[category].hasOwnProperty(field)) {
+                                                if (typeof tv[category][field] === 'undefined') {
+                                                    tv[category][field] = '';
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    }
 
-                    this.$set('tvs', tv);
+                            this.$set('tvs', tv);
+
+                        }.bind(this));
 
                 }.bind(this));
         },

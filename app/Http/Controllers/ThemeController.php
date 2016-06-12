@@ -96,7 +96,11 @@ class ThemeController extends Controller
     {
         $config = Yaml::parse(file_get_contents(base_path() . '/resources/views/themes/' . getSiteOption('active_theme') . '/variables.yaml'));
 
-        $categories = $config['blog'];
+        $categories = [];
+
+        if (isset($config[$this->request->template])) {
+            $categories = $config[$this->request->template];
+        }
 
         return successResponse('Retrieved template variables', ['categories' => $categories]);
     }

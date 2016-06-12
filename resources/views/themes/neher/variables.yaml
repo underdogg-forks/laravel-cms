@@ -1,4 +1,4 @@
-blog:
+index:
   header:
     title:
         type: text
@@ -12,9 +12,8 @@ blog:
       type: text
       caption: Copyright Text
 
-header:
-  namespace: true
-  title:
-    caption: Title
-    type: text
-    default: A Default Title
+blog:
+  page:
+    blogTitle:
+      type: text
+      caption: Main title

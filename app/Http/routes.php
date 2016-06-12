@@ -29,6 +29,7 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 
     Route::get('pages', 'PageController@pages');
     Route::post('pages/new', 'PageController@create');
+    Route::get('pages/{id}/tvs', 'TVController@getPageTVs');
 
     Route::get('themes', 'ThemeController@getListOfThemes');
 

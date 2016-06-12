@@ -56,4 +56,25 @@ class TVController extends Controller
 
         return successResponse('TVs created');
     }
+
+    public function getPageTVs($id)
+    {
+        $tvs = $this->tvModel->where('page_id', '=', $id)->get();
+
+        $temp = [];
+
+        foreach ($tvs as $tv) {
+            $columns = explode('_', $tv->name);
+
+            $temp[$columns[0]][$columns[1]] = $tv->value;
+        }
+
+        $results = true;
+
+        if (empty($temp)) {
+            $results = false;
+        }
+
+        return successResponse('Retrieved tvs for page', ['tvs' => $temp, 'results' => $results]);
+    }
 }
