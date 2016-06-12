@@ -63,6 +63,8 @@
 
                         <hr>
 
+                        <h3>Template Variables</h3>
+
                         <ul class="nav nav-tabs">
                             <li v-for="(category, fields) in templateVariables" role="presentation" v-bind:class="{'active': $index == 0}" >
                                 <a href="#@{{ category }}" role="tab" data-toggle="tab" aria-controls="@{{ category }}">

@@ -9,6 +9,15 @@ We use a lot of ModX and WordPress at work (and do an equivalent amount of compl
 
 The problem with a lot of CMS's these days is that they aren't very client friendly, so I am keeping that in mind when building this.
 
+## Screenshots
+
+The add new pages screen
+
+![Pages](http://i.imgur.com/0sueBMI.png)
+
+
+... More to come
+
 ## Features
 
 So far all of my features and todos have been kept in my Wunderlist, but I'll try and migrate them to GitHub issues.
