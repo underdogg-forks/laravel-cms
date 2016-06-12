@@ -46,11 +46,18 @@ class TVController extends Controller
             foreach ($fields as $field => $value) {
                 $variableName =  $category . '_' . $field;
 
-                $this->tvModel->create([
-                    'name' => $variableName,
-                    'value' => $value,
-                    'page_id' => $this->request->pageId
-                ]);
+                $existing = $this->tvModel->whereName($variableName)->where('page_id', '=', $this->request->pageId)->first();
+
+                if (!empty($existing)) {
+                    $existing->value = $value;
+                    $existing->save();
+                } else {
+                    $this->tvModel->create([
+                        'name' => $variableName,
+                        'value' => $value,
+                        'page_id' => $this->request->pageId
+                    ]);
+                }
             }
         }
 
