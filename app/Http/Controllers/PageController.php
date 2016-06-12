@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Page;
 use App\Theme;
+use App\TV;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -21,18 +22,21 @@ class PageController extends Controller
     private $request;
 
     private $themeModel;
+    private $tvModel;
 
     /**
      * PageController constructor.
      * @param Page $pageModel
      * @param Request $request
      * @param Theme $themeModel
+     * @param TV $tvModel
      */
-    public function __construct(Page $pageModel, Request $request, Theme $themeModel)
+    public function __construct(Page $pageModel, Request $request, Theme $themeModel, TV $tvModel)
     {
         $this->pageModel = $pageModel;
         $this->request = $request;
         $this->themeModel = $themeModel;
+        $this->tvModel = $tvModel;
     }
 
     public function pages()
@@ -68,12 +72,16 @@ class PageController extends Controller
     {
         $page = $this->pageModel->whereSlug($slug)->firstOrFail();
 
-        $theme = $this->themeModel->whereActive(true)->firstOrFail();
+        $theme = getSiteOption('active_theme');
 
-        $tvs = Yaml::parse(file_get_contents(base_path() . '/resources/views/themes/' . $theme->name . '/variables.yaml'));
+        $temp = $this->tvModel->where('page_id', '=', $page->id)->get();
+
+        foreach ($temp as $t) {
+            $tvs[$t->name] = $t->value;
+        }
 
         $tvs = arrayToObj($tvs);
 
-        return view('themes.' . $theme->name . '.templates.' . $page->template, compact('tvs'));
+        return view('themes.' . $theme . '.templates.' . $page->template, compact('tvs'));
     }
 }

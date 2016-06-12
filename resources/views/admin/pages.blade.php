@@ -30,7 +30,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         @{{ active.name }}
-                        <button class="btn btn-primary pull-right" class="pull-right">
+                        <button class="btn btn-primary pull-right" v-on:click="submitTemplateVariables()" class="pull-right">
                             Save
                         </button>
                     </div>
@@ -74,7 +74,7 @@
                             <div role="tabpanel" v-for="(category, fields) in templateVariables" class="tab-pane" v-bind:class="{'active': $index == 0}" id="@{{ category }}">
                                 <div v-for="(field, property) in fields" class="form-group">
                                     <label for="">@{{ property.caption }}</label>
-                                    <input type="@{{ property.type }}" class="form-control">
+                                    <input v-model="tvs[category][field]" type="@{{ property.type }}" class="form-control">
                                 </div>
                             </div>
                         </div>

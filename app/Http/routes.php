@@ -35,6 +35,7 @@ Route::group(['middleware' => ['web', 'auth']], function() {
     Route::get('templates', 'ThemeController@getListOfTemplates');
 
     Route::post('template-variables', 'ThemeController@getListOfTemplateVariables');
+    Route::post('template-variables/save', 'TVController@create');
 
     Route::post('option', 'OptionController@option');
     Route::post('option/update', 'OptionController@update');

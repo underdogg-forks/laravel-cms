@@ -11792,7 +11792,7 @@ Vue.component('pages', {
     ready: function ready() {
         this.getPages();
         this.getTemplates();
-        this.getTemplateVariables();
+        this.getTemplateVariableFields();
     },
     data: function data() {
         return {
@@ -11806,7 +11806,9 @@ Vue.component('pages', {
 
             active: {},
 
-            templateVariables: []
+            templateVariables: {},
+
+            tvs: {}
         };
     },
 
@@ -11846,10 +11848,33 @@ Vue.component('pages', {
                 }
             }
         },
-        getTemplateVariables: function getTemplateVariables() {
+        getTemplateVariableFields: function getTemplateVariableFields() {
             this.$http.post('/template-variables', { 'template': this.active.template }).then(function (response) {
                 this.templateVariables = response.data.categories;
+
+                var tv = {};
+
+                for (var category in this.templateVariables) {
+                    if (this.templateVariables.hasOwnProperty(category)) {
+                        if (typeof tv[category] === 'undefined') {
+                            tv[category] = {};
+
+                            for (var field in this.templateVariables[category]) {
+                                if (this.templateVariables[category].hasOwnProperty(field)) {
+                                    if (typeof tv[category][field] === 'undefined') {
+                                        tv[category][field] = '';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                this.$set('tvs', tv);
             }.bind(this));
+        },
+        submitTemplateVariables: function submitTemplateVariables() {
+            this.$http.post('/template-variables/save', { tvs: this.tvs, pageId: this.active.id });
         }
     }
 });
