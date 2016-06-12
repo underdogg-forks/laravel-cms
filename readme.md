@@ -1,27 +1,69 @@
-# Laravel PHP Framework
+# Laravel CMS (Name TBD)
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+**Foreword**: This is a rough, messy, and conceptual first run at a CMS. Testing (unit, functional, and integration) has not been done. Code structure and design was all done my myself in a night, so things may be overthought and have weird approaches.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+With that out of the way...
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+This is a custom content management system built in Laravel and Vue.js (I'm noticing a few limitations with Vue so I may end up switching).
+We use a lot of ModX and WordPress at work (and do an equivalent amount of complaining) so I thought it'd be fun to see how and why those CMS's got the way they did in the first place.
 
-## Official Documentation
+The problem with a lot of CMS's these days is that they aren't very client friendly, so I am keeping that in mind when building this.
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+## Features
 
-## Contributing
+So far all of my features and todos have been kept in my Wunderlist, but I'll try and migrate them to GitHub issues.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+**Working so far as of writing this**
 
-## Security Vulnerabilities
+(And by working I mean baseline functional with obvious need for improvement)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+* Theme switching
+* Theme detection
+* Adding new pages
+* Detecting template files
+* Attaching templates to pages
+* Defining template variables
+* Adding content to template variables
+* Displaying actual pages after being created
 
-## License
+## Structure
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+### Themes
+
+Themes are stored in `resoures/views/themes/` but have plans to move them to `public/themes/`.
+
+If I wanted my theme to be called `my-theme` I would make the folder `resources/views/themes/my-theme/` and put all my theme related files in here.
+(I have future plans to move all theme related information into a `theme.yaml` file).
+
+Right now themes are not stored in the database. They are simply pulled by directory name, as only one theme can be active at a time.
+The current active theme is stored in the sites configuration file in `storage/site/config.yaml`.
+
+### Template Variables
+
+TVs are defined in a `variables.yaml` file located in your themes directory
+
+The TV structure is as follows
+
+```yaml
+index: #template name
+  header: #category name (the tab on the editor page to group fields)
+    title: #field name
+        type: text #field type
+        caption: Title #field label for front end
+    subtitle:
+        type: text
+        caption: Subtitle
+
+  footer:
+    copy:
+      type: text
+      caption: Copyright Text
+```
+
+### Views
+
+Inside your themes directory, you need to create a folder called templates. Inside here is where all of you pages templates will be stored.
+Templates use the `.blade.php` extension and have all of the lovely benefits of Laravel Blade.
+
+You can access your template variables from your views by simply writing in the convention of `{{ $tvs->category_field }}`.
+So for the above example, referencing the subtitle field would look like `{{ $tvs->header_subtitle}}`
