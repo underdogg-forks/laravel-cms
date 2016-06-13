@@ -23,7 +23,9 @@ Vue.component('pages', {
 
            templateVariables: {},
 
-           tvs: {}
+           tvs: {},
+
+           pageErrors: []
        }
    },
 
@@ -109,7 +111,13 @@ Vue.component('pages', {
                 }.bind(this));
         },
 
-        submitTemplateVariables() {
+        savePage() {
+            this.$http.post('/pages/' + this.active.id + '/update', this.active)
+                .then(function(response) {
+                    if (response.data.status == 'error') {
+                        this.pageErrors = response.data.errors;
+                    }
+                }.bind(this));
             this.$http.post('/template-variables/save', {tvs: this.tvs, pageId: this.active.id});
         }
     }

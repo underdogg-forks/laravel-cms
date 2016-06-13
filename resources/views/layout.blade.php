@@ -51,5 +51,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="/js/bootstrap.js"></script>
 	<script src="/js/trix.js"></script>
+
+	@yield('scripts')
 </body>
 </html>

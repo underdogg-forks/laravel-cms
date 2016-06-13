@@ -45,7 +45,7 @@ class PageController extends Controller
     public function create()
     {
         $validate = validateAjaxForm($this->request->all(), [
-            'name'     => 'required|unique:pages',
+            'name' => 'required|unique:pages',
             'template' => 'required'
         ]);
 
@@ -80,6 +80,27 @@ class PageController extends Controller
 
         $tvs = arrayToObj($tvs);
 
-        return view('themes.' . $theme . '.templates.' . $page->template, compact('tvs'));
+        return view('themes.' . $theme . '.templates.' . $page->template, compact('tvs', 'page'));
+    }
+
+    public function update($id)
+    {
+        $page = $this->pageModel->whereId($id)->firstOrFail();
+
+        // TODO: Check if page name is unique but not current page
+        $validate = validateAjaxForm($this->request->all(), [
+            'name' => 'required',
+            'template' => 'required',
+            'slug' => 'required'
+        ]);
+
+        if ($validate instanceof JsonResponse) {
+            return $validate;
+        }
+
+        $page->fill($this->request->all());
+        $page->save();
+
+        return successResponse('Updated page');
     }
 }

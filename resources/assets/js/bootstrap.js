@@ -5,6 +5,8 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('[name="token"]
 
 window.Vue = Vue || require('vue');
 
+require('./directives/trix');
+
 require('./login');
 require('./register');
 

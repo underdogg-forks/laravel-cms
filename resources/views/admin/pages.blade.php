@@ -30,24 +30,28 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         @{{ active.name }}
-                        <button class="btn btn-primary pull-right" v-on:click="submitTemplateVariables()" class="pull-right">
+                        <button class="btn btn-primary pull-right" v-on:click="savePage()" class="pull-right">
                             Save
                         </button>
                     </div>
 
                     <div class="panel-body">
                         <form>
-                            <div class="form-group row">
+                            <div class="row">
                                 <div class="col-md-6">
-                                    <label>Page Name:</label>
-                                    <input type="text" v-model="active.name" class="form-control">
+                                    <div class="form-group" v-bind:class="{'has-error': pageErrors.name}">
+                                        <label>Page Name:</label>
+                                        <input type="text" v-model="active.name" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>URL:</label>
-                                    <input type="text" v-model="active.slug" class="form-control">
+                                    <div class="form-group" v-bind:class="{'has-error': pageErrors.slug}">
+                                        <label>URL:</label>
+                                        <input type="text" v-model="active.slug" class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" v-bind:class="{'has-error': pageErrors.template}">
                                 <label>Template:</label>
                                 <select type="text" v-model="active.template" class="form-control">
                                     <option v-for="template in templates" value="@{{ template }}">@{{ template }}</option>
@@ -56,8 +60,7 @@
 
                             <div class="form-group">
                                 <label>Content:</label>
-                                <input type="hidden" id="content" v-model="active.content">
-                                <trix-editor class="trix-content" input="content"></trix-editor>
+                                <textarea v-model="active.content" v-trix></textarea>
                             </div>
                         </form>
 
@@ -119,4 +122,9 @@
             @include('admin.saveWarning')
         </pages>
     </div>
+@endsection
+
+@section('scripts')
+    {{--<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>--}}
+    {{--<script>tinymce.init({ selector:'textarea' });</script>--}}
 @endsection
