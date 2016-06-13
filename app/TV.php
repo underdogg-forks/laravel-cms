@@ -8,7 +8,7 @@ class TV extends Model
 {
     protected $table = 'tvs';
 
-    protected $fillable = ['name', 'value', 'page_id'];
+    protected $fillable = ['name', 'value', 'page_id', 'category'];
 
     public function page() {
         return $this->belongsTo(Page::class);

@@ -73,7 +73,6 @@ Vue.component('pages', {
         },
 
         getTemplateVariableFields() {
-            console.log(this.active.template);
             this.$http.post('/template-variables', {'template': this.active.template})
                 .then(function(response) {
                     this.templateVariables = response.data.categories;

@@ -72,8 +72,10 @@ class PageController extends Controller
 
         $temp = $this->tvModel->where('page_id', '=', $page->id)->get();
 
+        $tvs = [];
+
         foreach ($temp as $t) {
-            $tvs[$t->name] = $t->value;
+            $tvs[$t->category][$t->name] = $t->value;
         }
 
         $tvs = arrayToObj($tvs);

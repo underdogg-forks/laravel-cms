@@ -11852,7 +11852,6 @@ Vue.component('pages', {
             }
         },
         getTemplateVariableFields: function getTemplateVariableFields() {
-            console.log(this.active.template);
             this.$http.post('/template-variables', { 'template': this.active.template }).then(function (response) {
                 this.templateVariables = response.data.categories;
 

@@ -2,5 +2,5 @@
 
 @section('content')
     <h1>Yo</h1>
-    <h2>{{ $tvs->header_title }}</h2>
+    <h2>{{ $tvs->header->title }}</h2>
 @endsection

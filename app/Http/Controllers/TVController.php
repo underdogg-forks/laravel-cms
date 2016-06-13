@@ -44,16 +44,19 @@ class TVController extends Controller
 
         foreach ($tvs as $category => $fields) {
             foreach ($fields as $field => $value) {
-                $variableName =  $category . '_' . $field;
 
-                $existing = $this->tvModel->whereName($variableName)->where('page_id', '=', $this->request->pageId)->first();
+                $existing = $this->tvModel->whereName($field)
+                                            ->where('page_id', '=', $this->request->pageId)
+                                            ->whereCategory($category)
+                                            ->first();
 
                 if (!empty($existing)) {
                     $existing->value = $value;
                     $existing->save();
                 } else {
                     $this->tvModel->create([
-                        'name' => $variableName,
+                        'name' => $field,
+                        'category' => $category,
                         'value' => $value,
                         'page_id' => $this->request->pageId
                     ]);
@@ -71,9 +74,7 @@ class TVController extends Controller
         $temp = [];
 
         foreach ($tvs as $tv) {
-            $columns = explode('_', $tv->name);
-
-            $temp[$columns[0]][$columns[1]] = $tv->value;
+            $temp[$tv->category][$tv->name] = $tv->value;
         }
 
         $results = true;
