@@ -74,5 +74,5 @@ index: #template name
 Inside your themes directory, you need to create a folder called templates. Inside here is where all of you pages templates will be stored.
 Templates use the `.blade.php` extension and have all of the lovely benefits of Laravel Blade.
 
-You can access your template variables from your views by simply writing in the convention of `{{ $tvs->category_field }}`.
-So for the above example, referencing the subtitle field would look like `{{ $tvs->header_subtitle}}`
+You can access your template variables from your views by simply writing in the convention of `{{ $tvs->category->field }}`.
+So for the above example, referencing the subtitle field would look like `{{ $tvs->header->subtitle}}`
