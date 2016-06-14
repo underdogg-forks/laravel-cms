@@ -16,19 +16,16 @@ function getSiteOption($option)
     return $config[$option];
 }
 
-function thdg()
+function themef()
 {
-    $config = Yaml::parse(file_get_contents(base_path() . '/resources/views/themes/neher/variables.yaml'));
+    $config = Yaml::parse(file_get_contents(base_path() . '/storage/site/config.yaml'));
 
-    $headers = [];
+    return $config['activeTheme'] . '::';
+}
 
-    foreach ($config['index'] as $category => $fields) {
-        foreach ($fields as $field => $properties) {
-            foreach($properties as $key => $value) {
+function theme_assets()
+{
+    $config = Yaml::parse(file_get_contents(base_path() . '/storage/site/config.yaml'));
 
-            }
-        }
-    }
-
-    dd();
+    return '/themes/' . $config['activeTheme'] . '/assets';
 }

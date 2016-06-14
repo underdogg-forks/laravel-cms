@@ -81,8 +81,6 @@ class PageController extends Controller
     {
         $page = $this->pageModel->whereSlug($slug)->firstOrFail();
 
-        $theme = getSiteOption('active_theme');
-
         $temp = $this->tvModel->where('page_id', '=', $page->id)->get();
 
         $tvs = [];
@@ -93,7 +91,7 @@ class PageController extends Controller
 
         $tvs = arrayToObj($tvs);
 
-        return view('themes.' . $theme . '.templates.' . $page->template, compact('tvs', 'page'));
+        return view(themef() . 'templates.' . $page->template, compact('tvs', 'page'));
     }
 
     public function update($id)

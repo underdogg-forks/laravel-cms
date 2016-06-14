@@ -1,4 +1,4 @@
-@extends('themes.neher.layout')
+@extends(themef() . 'layout')
 
 @section('content')
     <h1>Yo</h1>
