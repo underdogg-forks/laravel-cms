@@ -67,6 +67,16 @@ Vue.component('pages', {
                 }.bind(this));
         },
 
+        deletePage() {
+            if (confirm('Really delete this page and ALL of its children?')) {
+                this.$http.post('/pages/' + this.active.id + '/delete')
+                    .then(function(response) {
+                        this.active = {};
+                        this.getPages();
+                    }.bind(this));
+            }
+        },
+
         setActive(id) {
 
 

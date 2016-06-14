@@ -116,4 +116,14 @@ class PageController extends Controller
 
         return successResponse('Updated page');
     }
+
+    public function delete($id)
+    {
+        $page = $this->pageModel->whereId($id)->firstOrFail();
+
+        $page->delete();
+
+        return successResponse('Page deleted');
+    }
+
 }

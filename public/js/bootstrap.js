@@ -13399,6 +13399,14 @@ Vue.component('pages', {
                 }
             }.bind(this));
         },
+        deletePage: function deletePage() {
+            if (confirm('Really delete this page and ALL of its children?')) {
+                this.$http.post('/pages/' + this.active.id + '/delete').then(function (response) {
+                    this.active = {};
+                    this.getPages();
+                }.bind(this));
+            }
+        },
         setActive: function setActive(id) {
 
             //TODO: Check for changes

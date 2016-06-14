@@ -7,6 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         Pages
+
                         <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#newPage" class="pull-right">
                             New
                         </button>
@@ -30,9 +31,18 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         @{{ active.name }}
-                        <button class="btn btn-primary pull-right" v-on:click="savePage()" class="pull-right">
-                            Save
-                        </button>
+
+                        <span class="pull-right">
+                            <button class="btn btn-danger" v-on:click="deletePage()" class="pull-right">
+                                Delete
+                            </button>
+                            <a href="/@{{ active.slug }}" target="_blank" class="btn btn-primary" class="pull-right">
+                                View
+                            </a>
+                            <button class="btn btn-success" v-on:click="savePage()" class="pull-right">
+                                Save
+                            </button>
+                        </span>
                     </div>
 
                     <div class="panel-body">
