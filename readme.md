@@ -34,14 +34,15 @@ So far all of my features and todos have been kept in my Wunderlist, but I'll tr
 * Defining template variables
 * Adding content to template variables
 * Displaying actual pages after being created
+* Nested pages
 
 ## Structure
 
 ### Themes
 
-Themes are stored in `resoures/views/themes/` but have plans to move them to `public/themes/`.
+Themes are stored in `public/themes/`.
 
-If I wanted my theme to be called `my-theme` I would make the folder `resources/views/themes/my-theme/` and put all my theme related files in here.
+If I wanted my theme to be called `my-theme` I would make the folder `public/themes/my-theme/` and put all my theme related files in here.
 (I have future plans to move all theme related information into a `theme.yaml` file).
 
 Right now themes are not stored in the database. They are simply pulled by directory name, as only one theme can be active at a time.
@@ -76,3 +77,5 @@ Templates use the `.blade.php` extension and have all of the lovely benefits of 
 
 You can access your template variables from your views by simply writing in the convention of `{{ $tvs->category->field }}`.
 So for the above example, referencing the subtitle field would look like `{{ $tvs->header->subtitle}}`
+
+You also have access to the `$page` variable which has information like the page name, slug, content, template, and even child pages (via `$page->children`).
