@@ -23,9 +23,16 @@ function themef()
     return $config['activeTheme'] . '::';
 }
 
-function theme_assets()
+function themeAssets()
 {
     $config = Yaml::parse(file_get_contents(base_path() . '/storage/site/config.yaml'));
 
     return '/themes/' . $config['activeTheme'] . '/assets';
+}
+
+function themePath()
+{
+    $config = Yaml::parse(file_get_contents(base_path() . '/storage/site/config.yaml'));
+
+    return '/public/themes/' . $config['activeTheme'] . '';
 }

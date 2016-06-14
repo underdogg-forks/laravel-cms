@@ -30,7 +30,7 @@ Vue.component('pages', {
    },
 
     computed: {
-      parentPages: function() {
+      parentPages() {
           return this.pages.filter(function(item) {
              return !item.child;
           });
@@ -38,6 +38,10 @@ Vue.component('pages', {
     },
 
     methods: {
+        isArray(item) {
+            return Array.isArray(item);
+        },
+
         getPages() {
             this.$http.get('/pages')
                 .then(function(response) {

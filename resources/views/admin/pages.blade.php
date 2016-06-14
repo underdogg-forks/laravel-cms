@@ -74,23 +74,26 @@
                             </div>
                         </form>
 
-                        <hr>
+                        <div v-if="!isArray(templateVariables)">
 
-                        <h3>Template Variables</h3>
+                            <hr>
 
-                        <ul class="nav nav-tabs">
-                            <li v-for="(category, fields) in templateVariables" role="presentation" v-bind:class="{'active': $index == 0}" >
-                                <a href="#@{{ category }}" role="tab" data-toggle="tab" aria-controls="@{{ category }}">
-                                    @{{ category }}
-                                </a>
-                            </li>
-                        </ul>
+                            <h3>Template Variables</h3>
 
-                        <div class="tab-content">
-                            <div role="tabpanel" v-for="(category, fields) in templateVariables" class="tab-pane" v-bind:class="{'active': $index == 0}" id="@{{ category }}">
-                                <div v-for="(field, property) in fields" class="form-group">
-                                    <label for="">@{{ property.caption }}</label>
-                                    <input v-model="tvs[category][field]" type="@{{ property.type }}" class="form-control">
+                            <ul class="nav nav-tabs">
+                                <li v-for="(category, fields) in templateVariables" role="presentation" v-bind:class="{'active': $index == 0}" >
+                                    <a href="#@{{ category }}" role="tab" data-toggle="tab" aria-controls="@{{ category }}">
+                                        @{{ category }}
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" v-for="(category, fields) in templateVariables" class="tab-pane" v-bind:class="{'active': $index == 0}" id="@{{ category }}">
+                                    <div v-for="(field, property) in fields" class="form-group">
+                                        <label for="">@{{ property.caption }}</label>
+                                        <input v-model="tvs[category][field]" type="@{{ property.type }}" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>

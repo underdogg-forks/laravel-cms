@@ -13376,6 +13376,9 @@ Vue.component('pages', {
     },
 
     methods: {
+        isArray: function isArray(item) {
+            return Array.isArray(item);
+        },
         getPages: function getPages() {
             this.$http.get('/pages').then(function (response) {
                 this.pages = response.data.pages;

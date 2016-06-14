@@ -62,7 +62,7 @@ class ThemeController extends Controller
 
     public function getListOfTemplates()
     {
-        $files = scandir(base_path() . '/resources/views/themes/' . getSiteOption('activeTheme') . '/templates/');
+        $files = scandir(base_path() . themePath() . '/templates/');
 
         $templates = [];
 
@@ -77,7 +77,7 @@ class ThemeController extends Controller
 
     public function getListOfTemplateVariables()
     {
-        $config = Yaml::parse(file_get_contents(base_path() . '/resources/views/themes/' . getSiteOption('activeTheme') . '/variables.yaml'));
+        $config = Yaml::parse(file_get_contents(base_path() . themePath() . '/variables.yaml'));
 
         $categories = [];
 
