@@ -62,4 +62,4 @@ Route::get('tst', function() {
     thdg();
 });
 
-Route::get('{slug}', 'PageController@show');
+Route::get('{slug}', 'PageController@show')->where('slug', '.*');;

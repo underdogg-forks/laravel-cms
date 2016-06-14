@@ -37,7 +37,11 @@ class PageController extends Controller
 
     public function pages()
     {
-        $pages = $this->pageModel->latest()->get();
+        $pages = $this->pageModel->with('children')->with('parent')->latest()->get();
+
+        foreach ($pages->all() as $page) {
+            $page['child'] = !empty($page["parent"]);
+        }
 
         return successResponse('Retrieved pages', ['pages' => $pages]);
     }
@@ -55,10 +59,19 @@ class PageController extends Controller
 
         $slugify = new Slugify();
 
+        $parent = empty($this->request->parent) ? null : $this->request->parent;
+
+        if (!empty($parent)) {
+            $slug = $this->pageModel->whereId($parent)->firstOrFail()->slug . '/' . $slugify->slugify($this->request->name);
+        } else {
+            $slug = $slugify->slugify($this->request->name);
+        }
+
         $page = $this->pageModel->create([
             'name' => $this->request->name,
-            'slug' => $slugify->slugify($this->request->name),
-            'template' => $this->request->template
+            'slug' => $slug,
+            'template' => $this->request->template,
+            'parent_id' => $parent
         ]);
 
         return successResponse('Page created', ['slug' => $page->slug]);
@@ -98,7 +111,7 @@ class PageController extends Controller
             return $validate;
         }
 
-        $page->fill($this->request->all());
+        $page->fill($this->request->except('parent'));
         $page->save();
 
         return successResponse('Updated page');

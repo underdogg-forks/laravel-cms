@@ -16,7 +16,7 @@
                         <div class="panel-body">
                             <div class="panel-body">
                                 <ul class="nav" role="tablist">
-                                    <li v-for="page in pages" role="presentation" v-bind:class="{ 'active': page.id == active.id }">
+                                    <li v-for="page in parentPages" role="presentation" v-bind:class="{ 'active': page.id == active.id }">
                                         <a href="#" v-on:click="setActive(page.id)" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>
                                     </li>
                                 </ul>
@@ -86,6 +86,24 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="panel panel-default" v-if="active.children.length != 0">
+                    <div class="panel-heading">
+                        Child Pages
+                    </div>
+
+                    <div class="cms-nav-pill">
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <ul class="nav" role="tablist">
+                                    <li v-for="page in active.children" role="presentation">
+                                        <a href="#" v-on:click="setActive(page.id)" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Modal -->
@@ -101,6 +119,13 @@
                                 <div class="form-group" v-bind:class="{'has-error': errors.name}">
                                     <label class="control-label" for="name" v-if="errors.name">@{{ errors.name }}</label>
                                     <input type="text" v-model="model.name" placeholder="Page Name" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Parent</label>
+                                    <select class="form-control" v-model="model.parent" >
+                                        <option v-for="page in pages" value="@{{ page.id }}">@{{ page.name }}</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group" v-bind:class="{'has-error': errors.template}">
@@ -119,7 +144,6 @@
                 </div>
             </div>
 
-            @include('admin.saveWarning')
         </pages>
     </div>
 @endsection

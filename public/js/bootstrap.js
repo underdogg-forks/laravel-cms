@@ -13367,12 +13367,20 @@ Vue.component('pages', {
     },
 
 
+    computed: {
+        parentPages: function parentPages() {
+            return this.pages.filter(function (item) {
+                return !item.child;
+            });
+        }
+    },
+
     methods: {
         getPages: function getPages() {
             this.$http.get('/pages').then(function (response) {
                 this.pages = response.data.pages;
                 if (typeof this.active.name === 'undefined' && this.pages.length != 0) {
-                    this.active = this.pages[0];
+                    this.active = this.parentPages[0];
                 }
             }.bind(this));
         },
@@ -13528,7 +13536,10 @@ Vue.directive('trix', {
     bind: function bind() {
         var _this = this;
 
-        this.el.id = makeid();
+        do {
+            this.el.id = makeid();
+        } while ($('#id').length);
+
         var $el = $(this.el);
 
         $el.css({ display: 'none' });

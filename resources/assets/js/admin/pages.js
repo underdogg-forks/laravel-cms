@@ -29,13 +29,21 @@ Vue.component('pages', {
        }
    },
 
+    computed: {
+      parentPages: function() {
+          return this.pages.filter(function(item) {
+             return !item.child;
+          });
+      }
+    },
+
     methods: {
         getPages() {
             this.$http.get('/pages')
                 .then(function(response) {
                     this.pages = response.data.pages;
                     if (typeof this.active.name === 'undefined' && this.pages.length != 0) {
-                        this.active = this.pages[0];
+                        this.active = this.parentPages[0];
                     }
                 }.bind(this));
         },

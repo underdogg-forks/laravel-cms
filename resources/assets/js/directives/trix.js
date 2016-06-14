@@ -20,7 +20,11 @@ function makeid()
 Vue.directive('trix', {
     unwatch: () => {},
     bind: function () {
-        this.el.id = makeid();
+
+        do {
+            this.el.id = makeid();
+        } while ($('#id').length );
+
         var $el = $(this.el);
 
         $el.css({display: 'none'});
