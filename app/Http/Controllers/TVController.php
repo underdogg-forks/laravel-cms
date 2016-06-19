@@ -30,17 +30,14 @@ class TVController extends Controller
         $this->request = $request;
     }
 
+    /**
+     * Stores the TVs
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create()
     {
         $tvs = $this->request->tvs;
-
-        /*
-         * $tvs = [
-         *  'header' => [
-         *    'title' => 'my title'
-         *  ]
-         * ]
-         */
 
         foreach ($tvs as $category => $fields) {
             foreach ($fields as $field => $value) {
@@ -67,6 +64,12 @@ class TVController extends Controller
         return successResponse('TVs created');
     }
 
+    /**
+     * Returns a list of the pages tvs
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getPageTVs($id)
     {
         $tvs = $this->tvModel->where('page_id', '=', $id)->get();

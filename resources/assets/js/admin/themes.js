@@ -13,21 +13,21 @@ Vue.component('themes', {
 
     methods: {
         getThemeFolders() {
-            this.$http.get('/themes')
+            this.$http.get('/list-themes')
                 .then(function(response) {
                     this.folders = response.data.folders;
                 }.bind(this));
         },
 
         getActiveTheme() {
-            this.$http.post('/option', {'option': 'active_theme'})
+            this.$http.post('/option', {'option': 'activeTheme'})
                 .then(function(response) {
                     this.activeTheme = response.data.option;
                 }.bind(this));
         },
 
         setActiveTheme() {
-            this.$http.post('/option/update', {'option': 'active_theme', 'value': this.activeTheme})
+            this.$http.post('/option/update', {'option': 'activeTheme', 'value': this.activeTheme})
                 .then(function(response) {
                     this.getActiveTheme();
                 }.bind(this));

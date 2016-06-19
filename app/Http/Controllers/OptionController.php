@@ -8,7 +8,14 @@ use App\Http\Requests;
 
 class OptionController extends Controller
 {
+    /**
+     * @var Request
+     */
     private $request;
+
+    /**
+     * @var string
+     */
     private $configPath;
 
     /**
@@ -21,18 +28,13 @@ class OptionController extends Controller
         $this->configPath = base_path() . '/storage/site/config.yaml';
     }
 
+    /**
+     * Retrieves an option from the sites config
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function option()
     {
-//        $option = explode('.', $this->request->option);
-//
-//        $config = Yaml::parse(file_get_contents(base_path() . '/storage/site/config.yaml'));
-//
-//        $value = $config;
-//
-//        for ($i = 0; $i < sizeof($option); $i++) {
-//            $value = $value[$option[$i]];
-//        }
-
         $config = Yaml::parse(file_get_contents(base_path() . '/storage/site/config.yaml'));
 
         $value = $config[$this->request->option];
@@ -40,6 +42,11 @@ class OptionController extends Controller
         return successResponse('Got option', ['option' => $value]);
     }
 
+    /**
+     * Updates an option in the sites config
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update()
     {
         $config = Yaml::parse(file_get_contents($this->configPath));

@@ -36,4 +36,7 @@ html, body {
 .cms-nav-pill .active a {
   border-left: 3px solid #4A90E2; }
 
+trix-editor {
+  height: 250px; }
+
 /*# sourceMappingURL=app.css.map */

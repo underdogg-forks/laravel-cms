@@ -16,10 +16,19 @@ use Symfony\Component\Yaml\Yaml;
 
 class PageController extends Controller
 {
+    /**
+     * @var Page
+     */
     private $pageModel;
 
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * @var TV
+     */
     private $tvModel;
 
     /**
@@ -35,6 +44,11 @@ class PageController extends Controller
         $this->tvModel = $tvModel;
     }
 
+    /**
+     * Gets a list of all pages
+     *
+     * @return JsonResponse
+     */
     public function pages()
     {
         $pages = $this->pageModel->with('children')->with('parent')->latest()->get();
@@ -46,6 +60,11 @@ class PageController extends Controller
         return successResponse('Retrieved pages', ['pages' => $pages]);
     }
 
+    /**
+     * Stores a page in the DB
+     *
+     * @return bool|JsonResponse
+     */
     public function create()
     {
         $validate = validateAjaxForm($this->request->all(), [
@@ -77,6 +96,12 @@ class PageController extends Controller
         return successResponse('Page created', ['slug' => $page->slug]);
     }
 
+    /**
+     * Shows a page
+     *
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($slug)
     {
         $page = $this->pageModel->whereSlug($slug)->firstOrFail();
@@ -94,6 +119,12 @@ class PageController extends Controller
         return view(themef() . 'templates.' . $page->template, compact('tvs', 'page'));
     }
 
+    /**
+     * Updates a page
+     *
+     * @param $id
+     * @return bool|JsonResponse
+     */
     public function update($id)
     {
         $page = $this->pageModel->whereId($id)->firstOrFail();
@@ -102,7 +133,7 @@ class PageController extends Controller
         $validate = validateAjaxForm($this->request->all(), [
             'name' => 'required',
             'template' => 'required',
-            'slug' => 'required'
+            'slug' => 'required,unique:pages,slug'
         ]);
 
         if ($validate instanceof JsonResponse) {
@@ -115,6 +146,12 @@ class PageController extends Controller
         return successResponse('Updated page');
     }
 
+    /**
+     * Deletes a page
+     *
+     * @param $id
+     * @return JsonResponse
+     */
     public function delete($id)
     {
         $page = $this->pageModel->whereId($id)->firstOrFail();

@@ -33,8 +33,6 @@ class UserController extends Controller
      */
     private $userModel;
 
-    private $validator;
-
     /**
      * UserController constructor.
      *
@@ -118,6 +116,17 @@ class UserController extends Controller
                 'errors' => ['username' => 'Incorrect username or password', 'password' => 'Incorrect username or password']
             ]);
         }
+    }
+
+    /**
+     * Logs the user out and redirects
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function logout()
+    {
+        $this->auth->logout();
+        return redirect('/login');
     }
 
     public function getErrors($values, $fields)

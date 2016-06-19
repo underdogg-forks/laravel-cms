@@ -13483,17 +13483,17 @@ Vue.component('themes', {
 
     methods: {
         getThemeFolders: function getThemeFolders() {
-            this.$http.get('/themes').then(function (response) {
+            this.$http.get('/list-themes').then(function (response) {
                 this.folders = response.data.folders;
             }.bind(this));
         },
         getActiveTheme: function getActiveTheme() {
-            this.$http.post('/option', { 'option': 'active_theme' }).then(function (response) {
+            this.$http.post('/option', { 'option': 'activeTheme' }).then(function (response) {
                 this.activeTheme = response.data.option;
             }.bind(this));
         },
         setActiveTheme: function setActiveTheme() {
-            this.$http.post('/option/update', { 'option': 'active_theme', 'value': this.activeTheme }).then(function (response) {
+            this.$http.post('/option/update', { 'option': 'activeTheme', 'value': this.activeTheme }).then(function (response) {
                 this.getActiveTheme();
             }.bind(this));
         }

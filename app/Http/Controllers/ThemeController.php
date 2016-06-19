@@ -10,6 +10,9 @@ use Symfony\Component\Yaml\Yaml;
 
 class ThemeController extends Controller
 {
+    /**
+     * @var Request
+     */
     private $request;
 
     /**
@@ -22,33 +25,13 @@ class ThemeController extends Controller
     }
 
     /**
-     * Creates a theme
+     * Returns a list of all themes in the themes directory
      *
-     * @return bool|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
-    {
-        $validate = validateAjaxForm($this->request->all(), [
-            'name' => 'required|unique:themes'
-        ]);
-
-        if ($validate instanceof JsonResponse) {
-            return $validate;
-        }
-
-        $theme = $this->themeModel->create([
-            'name' => $this->request->name,
-            'active' => $this->request->active
-        ]);
-
-        return successResponse('Theme added');
-    }
-
     public function getListOfThemes()
     {
-        //$dirs = glob(base_path() . '/resources/views/themes/*', GLOB_ONLYDIR);
-
-        $it = new \DirectoryIterator(base_path() . '/resources/views/themes/');
+        $it = new \DirectoryIterator(base_path() . '/public/themes/');
         $dirs = [];
         while($it->valid()){
             if ($it->getBasename() != '.' && $it->getBasename() != '..') {
@@ -60,6 +43,11 @@ class ThemeController extends Controller
         return successResponse('Got theme folders', ['folders' => $dirs]);
     }
 
+    /**
+     * Returns all of a themes template files
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getListOfTemplates()
     {
         $files = scandir(base_path() . themePath() . '/templates/');
@@ -75,6 +63,11 @@ class ThemeController extends Controller
         return successResponse('Got theme folders', ['templates' => $templates]);
     }
 
+    /**
+     * Returns all of a themes template variables
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getListOfTemplateVariables()
     {
         $config = Yaml::parse(file_get_contents(base_path() . themePath() . '/variables.yaml'));
@@ -86,12 +79,5 @@ class ThemeController extends Controller
         }
 
         return successResponse('Retrieved template variables', ['categories' => $categories]);
-    }
-
-    public function getActive()
-    {
-        $activeTheme = $this->themeModel->whereActive(true)->firstOrFail();
-
-        return successResponse('Retrieved active theme', ['activeTheme' => $activeTheme]);
     }
 }
