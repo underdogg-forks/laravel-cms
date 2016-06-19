@@ -1,6 +1,6 @@
 # Laravel CMS (Name TBD)
 
-**Foreword**: This is a rough, messy, and conceptual first run at a CMS. Testing (unit, functional, and integration) has not been done. Code structure and design was all done my myself in a night, so things may be overthought and have weird approaches.
+**Foreword**: This is a rough, messy, and conceptual first run at a CMS. Testing (unit, functional, and integration) has not been done. Code structure and design was all done by myself in a night, so things may be overthought and have weird approaches.
 
 With that out of the way...
 
