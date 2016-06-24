@@ -1,11 +1,10 @@
 Vue.component('pages', {
 
     ready() {
+        this.prepareHash();
         this.getPages();
-        this.getTemplates();
-        setTimeout(function() {
-            this.getTemplateVariableFields();
-        }.bind(this), 200);
+
+        window.onhashchange = this.handleHash;
     },
 
    data() {
@@ -38,6 +37,14 @@ Vue.component('pages', {
     },
 
     methods: {
+        prepareHash() {
+            if (window.location.hash) {
+                this.active.id = window.location.hash.substr(2);
+            } else {
+                window.location.href += "#/";
+            }
+        },
+
         isArray(item) {
             return Array.isArray(item);
         },
@@ -46,9 +53,11 @@ Vue.component('pages', {
             this.$http.get('/pages')
                 .then(function(response) {
                     this.pages = response.data.pages;
-                    if (typeof this.active.name === 'undefined' && this.pages.length != 0) {
-                        this.active = this.parentPages[0];
+                    if (typeof this.active.id != 'undefined') {
+                        this.setActive(this.active.id);
                     }
+                    this.getTemplateVariableFields();
+                    this.getTemplates();
                 }.bind(this));
         },
 
@@ -83,15 +92,33 @@ Vue.component('pages', {
 
         setActive(id) {
 
-
             //TODO: Check for changes
 
             for (var i = 0; i < this.pages.length; i++) {
                 if (this.pages[i].id == id) {
                     this.active = this.pages[i];
+                    window.location.href = '#/' + this.pages[i].id;
                     this.getTemplateVariableFields();
                     break;
                 }
+            }
+
+        },
+
+        handleHash() {
+
+            //TODO: Check for changes
+
+            for (var i = 0; i < this.pages.length; i++) {
+                if (this.pages[i].id == window.location.hash.substr(2)) {
+                    this.active = this.pages[i];
+                    this.getTemplateVariableFields();
+                    break;
+                }
+            }
+
+            if (window.location.hash == '#/') {
+                this.active = {};
             }
 
         },

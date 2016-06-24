@@ -8,7 +8,7 @@
                     <div class="panel-heading clearfix">
                         Pages
 
-                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#newPage" class="pull-right">
+                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#newPage" class="pull-right" v-on:click="model.parent = active.id">
                             New
                         </button>
                     </div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-8" v-if="active.id">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         @{{ active.name }}
@@ -137,6 +137,7 @@
                                 <div class="form-group">
                                     <label for="">Parent</label>
                                     <select class="form-control" v-model="model.parent" >
+                                        <option value="" selected></option>
                                         <option v-for="page in pages" value="@{{ page.id }}">@{{ page.name }}</option>
                                     </select>
                                 </div>
