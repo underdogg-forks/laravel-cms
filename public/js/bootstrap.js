@@ -16071,7 +16071,9 @@ Vue.component('pages', {
 
             tvs: {},
 
-            pageErrors: []
+            pageErrors: [],
+
+            activeOriginal: {}
         };
     },
 
@@ -16135,23 +16137,29 @@ Vue.component('pages', {
             for (var i = 0; i < this.pages.length; i++) {
                 if (this.pages[i].id == id) {
                     this.active = this.pages[i];
+                    this.storeOriginal(this.active);
                     window.location.href = '#/' + this.pages[i].id;
                     this.getTemplateVariableFields();
                     break;
                 }
             }
         },
+        storeOriginal: function storeOriginal(obj) {
+            this.activeOriginal = Vue.util.extend({}, obj);
+        },
         handleHash: function handleHash() {
 
             //TODO: Check for changes
 
-            for (var i = 0; i < this.pages.length; i++) {
-                if (this.pages[i].id == window.location.hash.substr(2)) {
-                    this.active = this.pages[i];
-                    this.getTemplateVariableFields();
-                    break;
-                }
-            }
+            //for (var i = 0; i < this.pages.length; i++) {
+            //    if (this.pages[i].id == window.location.hash.substr(2)) {
+            //        this.active = this.pages[i];
+            //        this.getTemplateVariableFields();
+            //        break;
+            //    }
+            //}
+
+            this.setActive(window.location.hash.substr(2));
 
             if (window.location.hash == '#/') {
                 this.active = {};
@@ -16190,12 +16198,33 @@ Vue.component('pages', {
             }.bind(this));
         },
         savePage: function savePage() {
-            this.$http.post('/pages/' + this.active.id + '/update', this.active).then(function (response) {
-                if (response.data.status == 'error') {
-                    this.pageErrors = response.data.errors;
+
+            var proceed = true;
+            var changed = false;
+
+            if (this.activeOriginal.template != this.active.template) {
+                changed = true;
+                if (!confirm('Changing the template will erase all previous TV values, continue?')) {
+                    proceed = false;
                 }
-            }.bind(this));
-            this.$http.post('/template-variables/save', { tvs: this.tvs, pageId: this.active.id });
+            }
+
+            if (proceed) {
+                this.$http.post('/pages/' + this.active.id + '/update', this.active).then(function (response) {
+                    if (response.data.status == 'error') {
+                        this.pageErrors = response.data.errors;
+                    } else {
+                        this.pageErrors = {};
+                        if (changed) {
+                            this.getTemplateVariableFields();
+                        } else {
+                            this.$http.post('/template-variables/save', { tvs: this.tvs, pageId: this.active.id });
+                        }
+
+                        this.storeOriginal(this.active);
+                    }
+                }.bind(this));
+            }
         }
     }
 });

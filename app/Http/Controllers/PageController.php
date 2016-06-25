@@ -133,11 +133,15 @@ class PageController extends Controller
         $validate = validateAjaxForm($this->request->all(), [
             'name' => 'required',
             'template' => 'required',
-            'slug' => 'required,unique:pages,slug'
+            'slug' => 'required'
         ]);
 
         if ($validate instanceof JsonResponse) {
             return $validate;
+        }
+
+        if ($this->request->template != $page->template) {
+            $this->tvModel->where('page_id', '=', $page->id)->delete();
         }
 
         $page->fill($this->request->except('parent'));
