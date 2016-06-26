@@ -15,7 +15,6 @@
                         <input type="password" v-model="model.password" placeholder="Password" class="form-control">
                     </div>
                     <div class="form-group">
-                        <span class="pull-left"><a href="/register">Need an account?</a></span>
                         <button class="btn btn-primary pull-right" v-on:click="submit()">Login</button>
                     </div>
                 </form>

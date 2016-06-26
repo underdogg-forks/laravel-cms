@@ -8,11 +8,9 @@
                     <div class="panel-heading clearfix">
                         Users
 
-                        <span class="pull-right">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#newUser">
-                                New
-                            </button>
-                        </span>
+                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#newUser">
+                            New
+                        </button>
                     </div>
 
                     <div class="cms-nav-pill">

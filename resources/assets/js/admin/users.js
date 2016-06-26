@@ -49,7 +49,7 @@ Vue.component('users', {
         },
 
         saveNewUser() {
-            this.$http.post('/users/new', Vue.util.extend({donotlogin: true}, this.newUser))
+            this.$http.post('/users/new', this.newUser)
                 .then(function(response) {
                     if (response.data.status == 'error') {
                         this.modalErrors = response.data.errors;

@@ -75,9 +75,6 @@ class UserController extends Controller
             'password' => bcrypt($this->request->password),
         ]);
 
-        if (empty($this->request->donotlogin))
-            $this->auth->login($user);
-
         return response()->json([
             'status' => 'success',
             'message' => 'User created'
