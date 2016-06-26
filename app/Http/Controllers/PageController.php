@@ -59,11 +59,13 @@ class PageController extends Controller
     {
         $pages = $this->pageModel->with('children')->with('parent')->latest()->get();
 
+        $indexPage = getSiteOption('indexPage');
 
         $i = 0;
         foreach ($pages->all() as $page) {
             $page['child'] = !empty($page["parent"]);
             $page['permalink'] = $pages->get($i)->permalink();
+            $page['isIndex'] = ($page['id'] == $indexPage) ? true : false;
             $i++;
         }
 
@@ -110,40 +112,45 @@ class PageController extends Controller
      */
     public function show($slug)
     {
-        $url = explode('/', $slug);
+        if ($slug == '/') {
+            $page = $this->pageModel->find(getSiteOption('indexPage'));
+        } else {
 
-        // Get all pages with the matching last slug
-        $pages = $this->pageModel->whereSlug($url[sizeof($url) - 1])->get();
+            $url = explode('/', $slug);
 
-        $found = false;
+            // Get all pages with the matching last slug
+            $pages = $this->pageModel->whereSlug($url[sizeof($url) - 1])->get();
 
-        /**
-         * Loops through each of the matching pages parent, building a url
-         * if the page + parents slugs don't make a URL that matches the one in the request, abort
-         */
-        foreach ($pages as $page) {
-            if (!$found) {
-                // If the page has parents, build out the full slug
-                if ($page->parent()->count()) {
-                    $this->getParentSlug($page->parent);
-                }
+            $found = false;
 
-                $this->pageSlug .= $page->slug;
+            /**
+             * Loops through each of the matching pages parent, building a url
+             * if the page + parents slugs don't make a URL that matches the one in the request, abort
+             */
+            foreach ($pages as $page) {
+                if (!$found) {
+                    // If the page has parents, build out the full slug
+                    if ($page->parent()->count()) {
+                        $this->getParentSlug($page->parent);
+                    }
 
-                // not a match, try again
-                if ($this->pageSlug != implode('/', $url)) {
-                    $this->pageSlug = '';
-                    continue;
+                    $this->pageSlug .= $page->slug;
+
+                    // not a match, try again
+                    if ($this->pageSlug != implode('/', $url)) {
+                        $this->pageSlug = '';
+                        continue;
+                    } else {
+                        $found = true;
+                    }
                 } else {
-                    $found = true;
+                    break;
                 }
-            } else {
-                break;
             }
-        }
 
-        if (!$found) {
-            abort(404);
+            if (!$found) {
+                abort(404);
+            }
         }
 
         // Grab the TVs for this page
@@ -241,5 +248,4 @@ class PageController extends Controller
             $this->pageSlug = implode('/', array_reverse($temp)) . '/';
         }
     }
-
 }

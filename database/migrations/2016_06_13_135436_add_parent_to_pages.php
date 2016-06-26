@@ -13,9 +13,16 @@ class AddParentToPages extends Migration
     public function up()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->integer('parent')->unsigned()->nullable()->default(null);
-            $table->foreign('parent')->references('id')->on('pages')->onDelete('cascade');
+            $table->integer('parent_id')->unsigned()->nullable()->default(null);
+            $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
         });
+
+        DB::table('pages')->insert([
+            'name' => 'Index',
+            'slug' => 'index',
+            'template' => 'index',
+            'content' => 'My first page!'
+        ]);
     }
 
     /**
@@ -26,7 +33,8 @@ class AddParentToPages extends Migration
     public function down()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->drop('parent');
+            $table->dropForeign('pages_parent_id_foreign');
+            $table->dropColumn('parent_id');
         });
     }
 }

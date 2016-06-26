@@ -198,6 +198,14 @@ Vue.component('pages', {
                     }.bind(this));
 
             }
+        },
+
+        makeIndex() {
+            this.$http.post('/option/update', {'option': 'indexPage', 'value': this.active.id})
+                .then(function(response) {
+                    this.active.isIndex = true;
+                   this.getPages();
+                }.bind(this));
         }
     }
 });

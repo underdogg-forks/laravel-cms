@@ -1,9 +1,6 @@
 <?php
 
 Route::group(['middleware' => ['web', 'auth']], function() {
-    Route::get('/', function() {
-        return redirect('/admin');
-    });
 
 	Route::get('/admin', 'AdminController@getIndex');
 

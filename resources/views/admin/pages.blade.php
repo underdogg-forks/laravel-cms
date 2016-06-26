@@ -30,11 +30,14 @@
             <div class="col-md-8" v-if="active.id">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
-                        @{{ active.name }}
+                        @{{ active.name }} <span v-if="active.isIndex">- Home Page</span>
 
                         <span class="pull-right">
                             <button class="btn btn-danger" v-on:click="deletePage()" class="pull-right">
                                 Delete
+                            </button>
+                            <button v-if="!active.isIndex" class="btn btn-warning" v-on:click="makeIndex()" class="pull-right">
+                                Make Home Page
                             </button>
                             <a href="/@{{ active.permalink }}" target="_blank" class="btn btn-primary" class="pull-right">
                                 View
