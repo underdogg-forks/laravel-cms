@@ -59,8 +59,12 @@ class PageController extends Controller
     {
         $pages = $this->pageModel->with('children')->with('parent')->latest()->get();
 
+
+        $i = 0;
         foreach ($pages->all() as $page) {
             $page['child'] = !empty($page["parent"]);
+            $page['permalink'] = $pages->get($i)->permalink();
+            $i++;
         }
 
         return successResponse('Retrieved pages', ['pages' => $pages]);

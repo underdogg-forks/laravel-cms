@@ -63,4 +63,36 @@ class Page extends Model
     {
         return $this->parent()->with('allParents');
     }
+
+    public function permalink()
+    {
+        $permalink = '';
+
+        // If the page has parents, build out the full slug
+        if ($this->parent()->count()) {
+            $this->getParentSlug($permalink, $this->parent);
+        }
+
+        $permalink .= $this->slug;
+
+        return $permalink;
+    }
+
+    /**
+     * Builds out the slug of all parent pages
+     *
+     * @param $parent
+     */
+    private function getParentSlug(&$link, $parent) {
+        if ($parent->parent()->count()) {
+            $link .= $parent->slug . '/';
+            $this->getParentSlug($link, $parent->parent);
+        } else {
+            $link .= $parent->slug;
+
+            $temp = explode('/', $link);
+
+            $link = implode('/', array_reverse($temp)) . '/';
+        }
+    }
 }

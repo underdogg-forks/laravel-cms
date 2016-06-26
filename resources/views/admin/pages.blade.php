@@ -36,7 +36,7 @@
                             <button class="btn btn-danger" v-on:click="deletePage()" class="pull-right">
                                 Delete
                             </button>
-                            <a href="/@{{ active.slug }}" target="_blank" class="btn btn-primary" class="pull-right">
+                            <a href="/@{{ active.permalink }}" target="_blank" class="btn btn-primary" class="pull-right">
                                 View
                             </a>
                             <button class="btn btn-success" v-on:click="savePage()" class="pull-right">
