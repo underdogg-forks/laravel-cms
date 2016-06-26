@@ -84,6 +84,48 @@ class UserController extends Controller
     }
 
     /**
+     * Updates the user
+     *
+     * @return bool|\Illuminate\Http\JsonResponse
+     */
+    public function update()
+    {
+        $user = $this->userModel->find($this->request->id);
+
+        $rules = [
+            'name' => 'required',
+            'username' => 'required'
+        ];
+
+        if (!empty($this->request->password)) {
+            $rules['password'] = 'required|confirmed';
+        }
+
+        $valid = validateAjaxForm($this->request->all(), $rules);
+
+        if ($valid instanceof JsonResponse) {
+            return $valid;
+        }
+
+        $errors = [];
+
+        if ($this->userModel->whereUsername($this->request->username)->exists() && $this->request->username != $user->username) {
+            $errors['username'] = 'Username is in use';
+        }
+
+        if (!empty($errors)) {
+            return errorResponse('From Errors', ['errors' => $errors]);
+        }
+
+        $user->username = $this->request->username;
+        $user->name = $this->request->name;
+        $user->password = bcrypt($this->request->password);
+        $user->save();
+
+        return successResponse('User updated');
+    }
+
+    /**
      * Logs in the user or displays the view if not ajax
      *
      * @return JSON
@@ -127,6 +169,28 @@ class UserController extends Controller
     {
         $this->auth->logout();
         return redirect('/login');
+    }
+
+    /**
+     * Return list of all users
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function users()
+    {
+        $users = $this->userModel->latest()->get();
+
+        return successResponse('Users retrieved', [ 'users' => $users ]);
+    }
+
+    /**
+     * Returns currently logged in user
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function user()
+    {
+        return successResponse('User Retrieved', ['user' => $this->auth->user()]);
     }
 
     public function getErrors($values, $fields)

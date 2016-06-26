@@ -16273,6 +16273,78 @@ Vue.component('themes', {
 },{}],8:[function(require,module,exports){
 'use strict';
 
+Vue.component('users', {
+    ready: function ready() {
+        this.getLoggedInUser();
+        this.getUsers();
+
+        this.prepareHash();
+
+        window.onhashchange = this.handleHash;
+    },
+    data: function data() {
+        return {
+            users: [],
+            loggedInUser: {},
+            active: {},
+            userErrors: {}
+        };
+    },
+
+
+    methods: {
+        prepareHash: function prepareHash() {
+            if (window.location.hash) {
+                this.active.id = window.location.hash.substr(2);
+            } else {
+                window.location.href += "#/";
+            }
+        },
+        handleHash: function handleHash() {
+
+            this.setActive(window.location.hash.substr(2));
+
+            if (window.location.hash == '#/') {
+                this.active = {};
+            }
+        },
+        getUsers: function getUsers() {
+            this.$http.get('/users').then(function (response) {
+                this.users = response.data.users;
+                if (typeof this.active.id != 'undefined') {
+                    this.setActive(this.active.id);
+                }
+            }.bind(this));
+        },
+        save: function save() {
+            this.$http.post('/users/update', this.active).then(function (response) {
+                if (response.data.status == 'error') {
+                    this.userErrors = response.data.errors;
+                } else {
+                    this.userErrors = {};
+                }
+            }.bind(this));
+        },
+        getLoggedInUser: function getLoggedInUser(user) {
+            this.$http.get('/user').then(function (response) {
+                this.loggedInUser = response.data.user;
+            }.bind(this));
+        },
+        setActive: function setActive(id) {
+            for (var i = 0; i < this.users.length; i++) {
+                if (this.users[i].id == id) {
+                    this.active = Vue.util.extend({}, this.users[i]);
+                    window.location.href = '#/' + this.users[i].id;
+                    break;
+                }
+            }
+        }
+    }
+});
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
 var Vue = require('vue');
 var VueRouter = require('vue-router');
 Vue.use(require('vue-resource'));
@@ -16289,12 +16361,13 @@ require('./register');
 
 require('./admin/pages');
 require('./admin/themes');
+require('./admin/users');
 
 new Vue({
     el: 'body'
 });
 
-},{"./admin/pages":6,"./admin/themes":7,"./directives/trix":9,"./login":10,"./register":11,"vue":5,"vue-resource":3,"vue-router":4}],9:[function(require,module,exports){
+},{"./admin/pages":6,"./admin/themes":7,"./admin/users":8,"./directives/trix":10,"./login":11,"./register":12,"vue":5,"vue-resource":3,"vue-router":4}],10:[function(require,module,exports){
 "use strict";
 
 var _ = require('underscore');
@@ -16351,7 +16424,7 @@ Vue.directive('trix', {
     }
 });
 
-},{"underscore":2}],10:[function(require,module,exports){
+},{"underscore":2}],11:[function(require,module,exports){
 'use strict';
 
 Vue.component('login', {
@@ -16372,14 +16445,14 @@ Vue.component('login', {
                 if (response.data.status == 'error') {
                     this.errors = response.data.errors;
                 } else {
-                    window.location.href = '/';
+                    window.location.href = '/admin';
                 }
             }.bind(this));
         }
     }
 });
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 Vue.component('register', {
@@ -16401,7 +16474,7 @@ Vue.component('register', {
                 if (response.data.status == 'error') {
                     this.errors = response.data.errors;
                 } else {
-                    window.location.href = '/';
+                    window.location.href = '/admin';
                 }
             }.bind(this)).catch(function (error) {
                 console.log(error);
@@ -16410,6 +16483,6 @@ Vue.component('register', {
     }
 });
 
-},{}]},{},[8]);
+},{}]},{},[9]);
 
 //# sourceMappingURL=bootstrap.js.map

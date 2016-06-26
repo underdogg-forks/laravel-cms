@@ -14,6 +14,7 @@ require('./register');
 
 require('./admin/pages');
 require('./admin/themes');
+require('./admin/users');
 
 new Vue({
     el: 'body'

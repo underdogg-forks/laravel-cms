@@ -17,7 +17,7 @@ Vue.component('register', {
                     if (response.data.status == 'error') {
                         this.errors = response.data.errors;
                     } else {
-                        window.location.href = '/';
+                        window.location.href = '/admin';
                     }
                 }.bind(this)).catch(function(error) {
                     console.log(error);

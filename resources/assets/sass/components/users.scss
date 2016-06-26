@@ -1,0 +1,24 @@
+.admin-users {
+
+  .admin-users__panel-body {
+    padding: 0;
+    ul {
+      list-style: none;
+      width: 100%;
+      margin: 0;
+
+      li {
+        padding: 15px;
+
+        &:hover {
+          background: rgba(155, 155, 155, 0.5);
+        }
+
+        &:nth-child(2n) {
+          background: #EEEEEE;
+        }
+      }
+    }
+  }
+
+}

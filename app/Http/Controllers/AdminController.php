@@ -45,6 +45,11 @@ class AdminController extends Controller
         return view('admin.themes');
     }
 
+    /**
+     * Admin dashboard
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getIndex()
     {
         $pages = $this->pageModel->latest()->take(5)->get();
@@ -52,31 +57,8 @@ class AdminController extends Controller
         return view('index', compact('pages'));
     }
 
-    public function test()
+    public function getUsers()
     {
-        $page = $this->pageModel->with('allParents')->whereId(7)->first();
-
-        if ($page->parent->count()) {
-            $this->getParentSlug($page->parent);
-        }
-
-        $this->slug .= $page->slug;
-
-        dd($this->slug);
-
-        return response()->json($this->slug);
-    }
-
-    function getParentSlug($parent) {
-        if ($parent->parent && $parent->parent->count()) {
-            $this->slug .= $parent->slug . '/';
-            $this->getParentSlug($parent->parent);
-        } else {
-            $this->slug .= $parent->slug . '/';
-
-            $temp = explode('/', $this->slug);
-
-            $this->slug = implode('/', array_reverse($temp)) . '/';
-        }
+        return view('admin.users');
     }
 }
