@@ -187,6 +187,7 @@ Vue.component('pages', {
                             this.pageErrors = response.data.errors;
                         } else {
                             this.pageErrors = {};
+                            this.getPages();
                             if (changed) {
                                 this.getTemplateVariableFields();
                             } else {

@@ -9,7 +9,7 @@
                         Users
 
                         <span class="pull-right">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#newUser">
                                 New
                             </button>
                         </span>
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div v-if="active.id" class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         @{{ active.username }}
@@ -76,6 +76,45 @@
                                     <input type="password" v-model="active.password_confirmation" class="form-control">
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="newUser" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">New User</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form v-on:submit.prevent="saveNewUser()">
+                                <div class="form-group" v-bind:class="{'has-error': modalErrors.name}">
+                                    <label class="control-label" for="name" v-if="modalErrors.name">@{{ modalErrors.name }}</label>
+                                    <input type="text" v-model="newUser.name" placeholder="Name" class="form-control" required>
+                                </div>
+
+                                <div class="form-group" v-bind:class="{'has-error': modalErrors.username}">
+                                    <label class="control-label" for="username" v-if="modalErrors.username">@{{ modalErrors.username }}</label>
+                                    <input type="text" v-model="newUser.username" placeholder="Username" class="form-control" required>
+                                </div>
+
+                                <div class="form-group" v-bind:class="{'has-error': modalErrors.password}">
+                                    <label class="control-label" for="password" v-if="modalErrors.password">@{{ modalErrors.password }}</label>
+                                    <input type="password" v-model="newUser.password" placeholder="Password" class="form-control" required>
+                                </div>
+
+                                <div class="form-group" v-bind:class="{'has-error': modalErrors.password_confirmation}">
+                                    <label class="control-label" for="password_confirmation" v-if="modalErrors.password_confirmation">@{{ modalErrors.password_confirmation }}</label>
+                                    <input type="password" v-model="newUser.password_confirmation" placeholder="Confirm Password" class="form-control" required>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" v-on:click="saveNewUser()">Save changes</button>
                         </div>
                     </div>
                 </div>

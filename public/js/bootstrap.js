@@ -16215,6 +16215,7 @@ Vue.component('pages', {
                         this.pageErrors = response.data.errors;
                     } else {
                         this.pageErrors = {};
+                        this.getPages();
                         if (changed) {
                             this.getTemplateVariableFields();
                         } else {
@@ -16287,7 +16288,9 @@ Vue.component('users', {
             users: [],
             loggedInUser: {},
             active: {},
-            userErrors: {}
+            userErrors: {},
+            newUser: {},
+            modalErrors: {}
         };
     },
 
@@ -16316,11 +16319,22 @@ Vue.component('users', {
                 }
             }.bind(this));
         },
+        saveNewUser: function saveNewUser() {
+            this.$http.post('/users/new', Vue.util.extend({ donotlogin: true }, this.newUser)).then(function (response) {
+                if (response.data.status == 'error') {
+                    this.modalErrors = response.data.errors;
+                } else {
+                    this.getUsers();
+                    $('#newUser').modal('toggle');
+                }
+            }.bind(this));
+        },
         save: function save() {
             this.$http.post('/users/update', this.active).then(function (response) {
                 if (response.data.status == 'error') {
                     this.userErrors = response.data.errors;
                 } else {
+                    this.getUsers();
                     this.userErrors = {};
                 }
             }.bind(this));

@@ -29,6 +29,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="/admin/pages">Pages</a></li>
 					<li><a href="/admin/themes">Themes</a></li>
+					<li><a href="/admin/users">Users</a></li>
 				</ul>
 				@endif
 				<ul class="nav navbar-nav navbar-right">

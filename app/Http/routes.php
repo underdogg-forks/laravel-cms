@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web', 'auth']], function() {
      */
     Route::get('users', 'UserController@users');
     Route::get('user', 'UserController@user');
+    Route::post('users/new', 'UserController@create');
     Route::post('users/update', 'UserController@update');
 });
 
