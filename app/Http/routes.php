@@ -1,13 +1,13 @@
 <?php
 
+use App\Page;
+
 Route::group(['middleware' => ['web', 'auth']], function() {
     Route::get('/', function() {
         return redirect('/admin');
     });
 
-	Route::get('/admin', function() {
-	    return view('index');
-	});
+	Route::get('/admin', 'AdminController@getIndex');
 
     Route::group(['prefix' => 'admin'], function() {
        Route::get('pages', 'AdminController@getPages');
@@ -42,4 +42,7 @@ Route::group(['middleware' => ['web', 'guest']], function() {
 
 Route::get('/logout', 'UserController@logout');
 
-Route::get('{slug}', 'PageController@show')->where('slug', '.*');;
+Route::get('/test', 'AdminController@test');
+
+Route::get('{slug}', 'PageController@show')->where('slug', '.*');
+

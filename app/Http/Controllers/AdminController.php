@@ -13,6 +13,7 @@ class AdminController extends Controller
      * @var Page
      */
     private $pageModel;
+    private $slug;
 
     /**
      * AdminController constructor.
@@ -20,7 +21,7 @@ class AdminController extends Controller
      */
     public function __construct(Page $pageModel)
     {
-
+        $this->slug = '';
         $this->pageModel = $pageModel;
     }
 
@@ -42,5 +43,40 @@ class AdminController extends Controller
     public function getThemes()
     {
         return view('admin.themes');
+    }
+
+    public function getIndex()
+    {
+        $pages = $this->pageModel->latest()->take(5)->get();
+
+        return view('index', compact('pages'));
+    }
+
+    public function test()
+    {
+        $page = $this->pageModel->with('allParents')->whereId(7)->first();
+
+        if ($page->parent->count()) {
+            $this->getParentSlug($page->parent);
+        }
+
+        $this->slug .= $page->slug;
+
+        dd($this->slug);
+
+        return response()->json($this->slug);
+    }
+
+    function getParentSlug($parent) {
+        if ($parent->parent && $parent->parent->count()) {
+            $this->slug .= $parent->slug . '/';
+            $this->getParentSlug($parent->parent);
+        } else {
+            $this->slug .= $parent->slug . '/';
+
+            $temp = explode('/', $this->slug);
+
+            $this->slug = implode('/', array_reverse($temp)) . '/';
+        }
     }
 }

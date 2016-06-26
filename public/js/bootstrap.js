@@ -16136,7 +16136,7 @@ Vue.component('pages', {
 
             for (var i = 0; i < this.pages.length; i++) {
                 if (this.pages[i].id == id) {
-                    this.active = this.pages[i];
+                    this.active = Vue.util.extend({}, this.pages[i]);
                     this.storeOriginal(this.active);
                     window.location.href = '#/' + this.pages[i].id;
                     this.getTemplateVariableFields();

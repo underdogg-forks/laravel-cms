@@ -30,3 +30,17 @@ function successResponse($message, $extra = null)
 
     return response()->json($data);
 }
+
+function errorResponse($message = 'Form Errors', $extra = null)
+{
+    $data = [
+        'status' => 'error',
+        'message' => $message
+    ];
+
+    if (isset($extra)) {
+        $data = array_merge($data, $extra);
+    }
+
+    return response()->json($data);
+}

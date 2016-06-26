@@ -32,6 +32,11 @@ class PageController extends Controller
     private $tvModel;
 
     /**
+     * @var string
+     */
+    private $pageSlug;
+
+    /**
      * PageController constructor.
      * @param Page $pageModel
      * @param Request $request
@@ -42,6 +47,7 @@ class PageController extends Controller
         $this->pageModel = $pageModel;
         $this->request = $request;
         $this->tvModel = $tvModel;
+        $this->pageSlug = '';
     }
 
     /**
@@ -80,11 +86,7 @@ class PageController extends Controller
 
         $parent = empty($this->request->parent) ? null : $this->request->parent;
 
-        if (!empty($parent)) {
-            $slug = $this->pageModel->whereId($parent)->firstOrFail()->slug . '/' . $slugify->slugify($this->request->name);
-        } else {
-            $slug = $slugify->slugify($this->request->name);
-        }
+        $slug = $slugify->slugify($this->request->name);
 
         $page = $this->pageModel->create([
             'name' => $this->request->name,
@@ -104,8 +106,43 @@ class PageController extends Controller
      */
     public function show($slug)
     {
-        $page = $this->pageModel->whereSlug($slug)->firstOrFail();
+        $url = explode('/', $slug);
 
+        // Get all pages with the matching last slug
+        $pages = $this->pageModel->whereSlug($url[sizeof($url) - 1])->get();
+
+        $found = false;
+
+        /**
+         * Loops through each of the matching pages parent, building a url
+         * if the page + parents slugs don't make a URL that matches the one in the request, abort
+         */
+        foreach ($pages as $page) {
+            if (!$found) {
+                // If the page has parents, build out the full slug
+                if ($page->parent()->count()) {
+                    $this->getParentSlug($page->parent);
+                }
+
+                $this->pageSlug .= $page->slug;
+
+                // not a match, try again
+                if ($this->pageSlug != implode('/', $url)) {
+                    $this->pageSlug = '';
+                    continue;
+                } else {
+                    $found = true;
+                }
+            } else {
+                break;
+            }
+        }
+
+        if (!$found) {
+            abort(404);
+        }
+
+        // Grab the TVs for this page
         $temp = $this->tvModel->where('page_id', '=', $page->id)->get();
 
         $tvs = [];
@@ -140,6 +177,24 @@ class PageController extends Controller
             return $validate;
         }
 
+        $errors = [];
+
+        if ($this->pageModel->whereName($this->request->name)->exists() && $this->request->name != $page->name) {
+            $errors['name'] = 'Name in use';
+        }
+
+        if (
+            ($page->parent()->count() && $this->pageModel->whereSlug($this->request->slug)->where('parent_id', '=', $page->parent->id)->exists())
+        || (!$page->parent()->count() && $this->pageModel->whereSlug($this->request->slug)->where('parent_id', '=', null)->exists() && $page->slug != $this->request->slug)
+        )
+        {
+            $errors['slug'] = 'Slug in use';
+        }
+
+        if (!empty($errors)) {
+            return errorResponse('Form Errors', ['errors' => $errors]);
+        }
+
         if ($this->request->template != $page->template) {
             $this->tvModel->where('page_id', '=', $page->id)->delete();
         }
@@ -163,6 +218,24 @@ class PageController extends Controller
         $page->delete();
 
         return successResponse('Page deleted');
+    }
+
+    /**
+     * Builds out the slug of all parent pages
+     *
+     * @param $parent
+     */
+    private function getParentSlug($parent) {
+        if ($parent->parent()->count()) {
+            $this->pageSlug .= $parent->slug . '/';
+            $this->getParentSlug($parent->parent);
+        } else {
+            $this->pageSlug .= $parent->slug;
+
+            $temp = explode('/', $this->pageSlug);
+
+            $this->pageSlug = implode('/', array_reverse($temp)) . '/';
+        }
     }
 
 }
