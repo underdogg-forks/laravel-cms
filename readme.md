@@ -13,7 +13,7 @@ The problem with a lot of CMS's these days is that they aren't very client frien
 
 The add new pages screen
 
-![Pages](http://i.imgur.com/0sueBMI.png)
+![Pages](http://i.imgur.com/W4ZJAAt.png)
 
 
 ... More to come
