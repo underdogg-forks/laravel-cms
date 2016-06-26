@@ -16339,6 +16339,14 @@ Vue.component('users', {
                 }
             }.bind(this));
         },
+        deleteUser: function deleteUser() {
+            if (confirm('Really delete this user?')) {
+                this.$http.post('/users/delete', this.active).then(function (response) {
+                    this.active = {};
+                    this.getUsers();
+                }.bind(this));
+            }
+        },
         getLoggedInUser: function getLoggedInUser(user) {
             this.$http.get('/user').then(function (response) {
                 this.loggedInUser = response.data.user;

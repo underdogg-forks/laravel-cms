@@ -35,7 +35,7 @@
                         @{{ active.username }}
 
                         <span class="pull-right">
-                            <button class="btn btn-danger" v-if="active.id != loggedInUser.id">
+                            <button class="btn btn-danger" v-if="active.id != loggedInUser.id" v-on:click="deleteUser()">
                                 Delete
                             </button>
                             <button class="btn btn-success" v-on:click="save()">

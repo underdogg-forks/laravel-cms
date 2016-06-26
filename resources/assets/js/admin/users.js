@@ -72,6 +72,16 @@ Vue.component('users', {
               }.bind(this));
         },
 
+        deleteUser() {
+            if (confirm('Really delete this user?')) {
+                this.$http.post('/users/delete', this.active)
+                    .then(function(response) {
+                        this.active = {};
+                        this.getUsers();
+                    }.bind(this));
+            }
+        },
+
         getLoggedInUser(user) {
             this.$http.get('/user')
                 .then(function(response) {

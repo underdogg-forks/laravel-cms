@@ -126,6 +126,15 @@ class UserController extends Controller
         return successResponse('User updated');
     }
 
+    public function delete()
+    {
+        $user = $this->userModel->findOrFail($this->request->id);
+
+        $user->delete();
+
+        return successResponse('User deleted');
+    }
+
     /**
      * Logs in the user or displays the view if not ajax
      *
