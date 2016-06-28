@@ -52,6 +52,11 @@ Route::group(['middleware' => ['web', 'auth']], function() {
     Route::post('users/new', 'UserController@create');
     Route::post('users/update', 'UserController@update');
     Route::post('users/delete', 'UserController@delete');
+
+    /**
+     * Flat files
+     */
+    Route::get('generate-flat-files', 'FlatFileController@generate');
 });
 
 /**
@@ -63,6 +68,8 @@ Route::group(['middleware' => ['web', 'guest']], function() {
 });
 
 Route::get('/logout', 'UserController@logout');
+
+Route::get('/test', 'AdminController@test');
 
 /**
  * Catch-all route for CMS pages

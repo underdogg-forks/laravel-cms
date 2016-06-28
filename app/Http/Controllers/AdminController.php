@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Page;
+use App\TV;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+
 
 class AdminController extends Controller
 {
@@ -14,15 +16,21 @@ class AdminController extends Controller
      */
     private $pageModel;
     private $slug;
+    /**
+     * @var TV
+     */
+    private $tvModel;
 
     /**
      * AdminController constructor.
      * @param Page $pageModel
+     * @param TV $tvModel
      */
-    public function __construct(Page $pageModel)
+    public function __construct(Page $pageModel, TV $tvModel)
     {
         $this->slug = '';
         $this->pageModel = $pageModel;
+        $this->tvModel = $tvModel;
     }
 
     /**
@@ -62,3 +70,4 @@ class AdminController extends Controller
         return view('admin.users');
     }
 }
+
