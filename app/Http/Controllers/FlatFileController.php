@@ -14,10 +14,16 @@ class FlatFileController extends Controller
      * @var Page
      */
     private $pageModel;
+
     /**
      * @var TV
      */
     private $tvModel;
+
+    /**
+     * @var string
+     */
+    private $location;
 
     /**
      * FlatFileController constructor.
@@ -28,6 +34,7 @@ class FlatFileController extends Controller
     {
         $this->pageModel = $pageModel;
         $this->tvModel = $tvModel;
+        $this->location = 'flatfile';
     }
 
     /**
@@ -39,6 +46,10 @@ class FlatFileController extends Controller
     {
         $pages = $this->pageModel->where('parent_id', '=' , null)->get();
 
+        if (file_exists(storage_path() . '/' . $this->location . '/')) {
+            $this->deleteFolder(storage_path() . '/' . $this->location . '/');
+        }
+
         foreach ($pages as $page) {
             $this->createDirectories($page);
         }
@@ -46,10 +57,10 @@ class FlatFileController extends Controller
         //create the index page
         $page = $this->pageModel->find(getSiteOption('indexPage'));
 
-        $this->createFiles($page, storage_path() . '/flatfile/');
+        $this->createFiles($page, storage_path() . '/' . $this->location . '/');
 
         // move assets over
-        $assetDir = storage_path() . '/flatfile/assets/';
+        $assetDir = storage_path() . '/' .$this->location . '/assets/';
 
         $this->xcopy(base_path() . themePath() . '/assets', $assetDir);
 
@@ -68,13 +79,13 @@ class FlatFileController extends Controller
      */
     public function createDirectories($page, $parent = '')
     {
-        if (!file_exists(storage_path() . '/flatfile/')) {
-            mkdir(storage_path() . '/flatfile/');
+        if (!file_exists(storage_path() . '/' . $this->location . '/')) {
+            mkdir(storage_path() . '/' . $this->location . '/');
         }
 
         // Page is a parent
         if (empty($parent)) {
-            $parent = storage_path() . '/flatfile/';
+            $parent = storage_path() . '/' . $this->location . '/';
         }
 
         $parent .= $page->slug . '/';
@@ -157,5 +168,32 @@ class FlatFileController extends Controller
         // Clean up
         $dir->close();
         return true;
+    }
+
+    /**
+     * https://stackoverflow.com/questions/1334398/how-to-delete-a-folder-with-contents-using-php
+     * @param $path
+     * @return bool
+     */
+    private function deleteFolder($path)
+    {
+        if (is_dir($path) === true && $path != '/')
+        {
+            $files = array_diff(scandir($path), array('.', '..'));
+
+            foreach ($files as $file)
+            {
+                $this->deleteFolder(realpath($path) . '/' . $file);
+            }
+
+            return rmdir($path);
+        }
+
+        else if (is_file($path) === true)
+        {
+            return unlink($path);
+        }
+
+        return false;
     }
 }
