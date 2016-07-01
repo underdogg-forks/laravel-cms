@@ -11,9 +11,11 @@ The problem with a lot of CMS's these days is that they aren't very client frien
 
 ## Screenshots
 
-The add new pages screen
+The admin dashboard
 
 ![Admin Index](http://i.imgur.com/MjJyQIU.png)
+
+The add new pages screen
 
 ![Pages](http://i.imgur.com/MGkUQeC.png)
 
