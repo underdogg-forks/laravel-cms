@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use App\Page;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Redis;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,5 +28,25 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->call(function() {
+
+            $pages = Page::all();
+
+            foreach ($pages as $page) {
+
+                $key = 'page:' . $page->id . ':views';
+
+                if (!Redis::exists($key)) {
+                    Redis::set($key, 0);
+                }
+
+                $pageCount = Redis::get($key);
+
+                $page->views = $pageCount;
+                $page->save();
+            }
+
+        })->everyMinute();
     }
 }
