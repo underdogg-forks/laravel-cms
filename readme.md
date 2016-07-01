@@ -13,8 +13,9 @@ The problem with a lot of CMS's these days is that they aren't very client frien
 
 The add new pages screen
 
-![Pages](http://i.imgur.com/MGkUQeC.png)
+![Admin Index](http://i.imgur.com/MjJyQIU.png)
 
+![Pages](http://i.imgur.com/MGkUQeC.png)
 
 ... More to come
 
