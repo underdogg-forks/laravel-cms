@@ -21,9 +21,12 @@ Vue.directive('trix', {
     unwatch: () => {},
     bind: function () {
 
+        var tempId = '';
         do {
-            this.el.id = makeid();
+            tempId = makeid();
         } while ($('#id').length );
+
+        this.el.id = tempId;
 
         var $el = $(this.el);
 

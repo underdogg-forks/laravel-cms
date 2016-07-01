@@ -94,8 +94,34 @@
                             <div class="tab-content">
                                 <div role="tabpanel" v-for="(category, fields) in templateVariables" class="tab-pane" v-bind:class="{'active': $index == 0}" id="@{{ category }}">
                                     <div v-for="(field, property) in fields" class="form-group">
+
                                         <label for="">@{{ property.caption }}</label>
-                                        <input v-model="tvs[category][field]" type="@{{ property.type }}" class="form-control">
+
+                                        <div v-if="property.type == 'text'">
+                                            <input v-model="tvs[category][field]" type="text" class="form-control">
+                                        </div>
+
+                                        <div v-if="property.type == 'select'">
+                                            <select v-model="tvs[category][field]" class="form-control">
+                                                <option value="" selected></option>
+                                                <option v-for="option in property.options" value="@{{ option }}">@{{ option }}</option>
+                                            </select>
+                                        </div>
+
+                                        <div v-if="property.type == 'textarea'">
+                                            <textarea v-model="tvs[category][field]" class="form-control"></textarea>
+                                        </div>
+
+                                        <div v-if="property.type == 'checkbox'">
+                                            <input type="checkbox" v-model="tvs[category][field]">
+                                        </div>
+
+                                        <div v-if="property.type == 'radio'">
+                                            <label class="radio-inline" v-for="option in property.options">
+                                                <input  type="radio" id="@{{ field }}@{{ $index }}" value="@{{ option }}" v-model="tvs[category][field]"> @{{ option }}
+                                            </label>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

@@ -20562,7 +20562,7 @@ Vue.component('pages', {
                                 for (var field in this.templateVariables[category]) {
                                     if (this.templateVariables[category].hasOwnProperty(field)) {
                                         if (typeof tv[category][field] === 'undefined') {
-                                            tv[category][field] = '';
+                                            tv[category][field] = null;
                                         }
                                     }
                                 }
@@ -20792,9 +20792,12 @@ Vue.directive('trix', {
     bind: function bind() {
         var _this = this;
 
+        var tempId = '';
         do {
-            this.el.id = makeid();
+            tempId = makeid();
         } while ($('#id').length);
+
+        this.el.id = tempId;
 
         var $el = $(this.el);
 

@@ -3,6 +3,7 @@ index:
     title:
         type: text
         caption: Title
+
     subtitle:
         type: text
         caption: Subtitle
