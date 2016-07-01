@@ -38,6 +38,8 @@ So far all of my features and todos have been kept in my Wunderlist, but I'll tr
 * Adding content to template variables
 * Displaying actual pages after being created
 * Nested pages
+* Flatfile generator (compiles views to independently hostable files)
+
 
 ## Structure
 
