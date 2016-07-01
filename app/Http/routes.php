@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'auth']], function() {
+Route::group(['middleware' => ['auth']], function() {
 
 	Route::get('/admin', 'AdminController@getIndex');
 
@@ -56,7 +56,7 @@ Route::group(['middleware' => ['web', 'auth']], function() {
     /**
      * Flat files
      */
-    Route::get('generate-flat-files', 'FlatFileController@generate');
+    Route::post('generate-flat-files', 'FlatFileController@generate');
 });
 
 /**

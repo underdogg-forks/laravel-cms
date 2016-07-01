@@ -26,15 +26,22 @@ class FlatFileController extends Controller
     private $location;
 
     /**
+     * @var Request
+     */
+    private $request;
+
+    /**
      * FlatFileController constructor.
      * @param Page $pageModel
      * @param TV $tvModel
+     * @param Request $request
      */
-    public function __construct(Page $pageModel, TV $tvModel)
+    public function __construct(Page $pageModel, TV $tvModel, Request $request)
     {
         $this->pageModel = $pageModel;
         $this->tvModel = $tvModel;
         $this->location = 'flatfile';
+        $this->request = $request;
     }
 
     /**
@@ -63,6 +70,10 @@ class FlatFileController extends Controller
         $assetDir = storage_path() . '/' .$this->location . '/assets/';
 
         $this->xcopy(base_path() . themePath() . '/assets', $assetDir);
+
+        if (!$this->request->ajax()) {
+            return redirect('/admin')->with('message', 'Flat files generated to ' . storage_path() . '/' . $this->location);
+        }
 
         return successResponse('Flat files created');
     }
