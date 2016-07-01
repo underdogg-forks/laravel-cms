@@ -63,11 +63,31 @@ index: #template name
     title: #field name
         type: text #field type
         caption: Title #field label for front end
-    subtitle:
-        type: text
-        caption: Subtitle
 
-  footer:
+    description:
+        type: textarea
+        caption: Write a description
+
+    displaySection:
+        type: checkbox
+        caption: Display this section?
+
+    author:
+        type: select
+        caption: Who wrote this?
+        options:
+            - George R. R. Martin
+            - J.K. Rowling
+
+    numberOfPeople:
+        type: radio
+        caption: How many people?
+        options:
+            - 1
+            - 2
+            - 3
+
+  footer: # this would be a new tab
     copy:
       type: text
       caption: Copyright Text
