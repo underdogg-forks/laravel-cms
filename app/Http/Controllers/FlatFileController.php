@@ -135,6 +135,15 @@ class FlatFileController extends Controller
         $tvs = arrayToObj($tvs);
 
         file_put_contents($parent . 'index.html', view(themef() . 'templates.' . $page->template, compact('tvs', 'page'))->render());
+
+        // REMOVE /themes/themename from all references to assets. e.g. /themes/default/assets/style.css => /assets/style.css
+        // THIS IS HORRIBLE. FIND BETTER SOLUTION
+        // THIS OVERWRITES ANY OCCURRENCES
+        $file = file_get_contents($parent . 'index.html');
+
+        $file = str_replace('/themes/' . getSiteOption('activeTheme'), '', $file);
+
+        file_put_contents($parent . 'index.html', $file);
     }
 
     /**
