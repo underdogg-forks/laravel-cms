@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/lumen/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/app.css">
 	<link rel="stylesheet" href="/css/trix.css">
+
+	@yield('styles')
 </head>
 <body>
 	<nav class="navbar navbar-default">

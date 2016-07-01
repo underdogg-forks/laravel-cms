@@ -47,6 +47,6 @@ class Kernel extends ConsoleKernel
                 $page->save();
             }
 
-        })->everyMinute();
+        })->everyMinute(); // only every minute for dev. for prod need to change to every 15 / 30
     }
 }

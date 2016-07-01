@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('pages/{id}/update', 'PageController@update');
     Route::post('pages/{id}/delete', 'PageController@delete');
     Route::get('pages/{id}/tvs', 'TVController@getPageTVs');
+    Route::get('pages/top', 'PageController@topPerforming');
 
     /**
      * Themes

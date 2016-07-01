@@ -266,4 +266,16 @@ class PageController extends Controller
             $this->pageSlug = implode('/', array_reverse($temp)) . '/';
         }
     }
+
+    /**
+     * Retrieve pages with most views
+     *
+     * @return JsonResponse
+     */
+    public function topPerforming()
+    {
+        $pages = $this->pageModel->orderBy('views', 'desc')->take('5')->get();
+
+        return successResponse('Retrieved pages', ['pages' => $pages]);
+    }
 }

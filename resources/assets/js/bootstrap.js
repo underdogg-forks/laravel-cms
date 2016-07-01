@@ -12,6 +12,7 @@ require('./directives/trix');
 require('./login');
 require('./register');
 
+require('./admin/dashboard');
 require('./admin/pages');
 require('./admin/themes');
 require('./admin/users');

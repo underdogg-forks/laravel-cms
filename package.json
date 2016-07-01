@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bootbox": "^4.4.0",
+    "chartist": "^0.9.8",
     "underscore": "^1.8.3",
     "vue": "^1.0.24",
     "vue-resource": "^0.7.2",

@@ -7,6 +7,7 @@ use App\TV;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 
 class AdminController extends Controller
@@ -62,7 +63,11 @@ class AdminController extends Controller
     {
         $pages = $this->pageModel->latest()->take(5)->get();
 
-        return view('index', compact('pages'));
+        $totalPageViews = DB::select('SELECT SUM(views) as sum from pages');
+
+        $totalPageViews = $totalPageViews[0]->sum;
+
+        return view('index', compact('pages', 'totalPageViews'));
     }
 
     public function getUsers()
