@@ -16,7 +16,12 @@ class AdminController extends Controller
      * @var Page
      */
     private $pageModel;
+
+    /**
+     * @var string
+     */
     private $slug;
+
     /**
      * @var TV
      */
@@ -70,6 +75,11 @@ class AdminController extends Controller
         return view('index', compact('pages', 'totalPageViews'));
     }
 
+    /**
+     * Manage users page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getUsers()
     {
         return view('admin.users');
