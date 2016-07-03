@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth']], function() {
 /**
  * Auth
  */
-Route::group(['middleware' => ['web', 'guest']], function() {
+Route::group(['middleware' => ['guest']], function() {
 	Route::get('/login', 'UserController@login');
 	Route::post('/login', 'UserController@login');
 });
