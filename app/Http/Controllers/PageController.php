@@ -195,7 +195,6 @@ class PageController extends Controller
     {
         $page = $this->pageModel->whereId($id)->firstOrFail();
 
-        // TODO: Check if page name is unique but not current page
         $validate = validateAjaxForm($this->request->all(), [
             'name' => 'required',
             'template' => 'required',

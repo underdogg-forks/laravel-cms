@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('styles')
+
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <pages inline-template>
@@ -73,7 +77,7 @@
 
                             <div class="form-group">
                                 <label>Content:</label>
-                                <textarea v-model="active.content" v-trix></textarea>
+                                <textarea v-model="active.content" v-ckeditor="active.content" class="richtext"></textarea>
                             </div>
                         </form>
 
@@ -110,6 +114,10 @@
 
                                         <div v-if="property.type == 'textarea'">
                                             <textarea v-model="tvs[category][field]" class="form-control"></textarea>
+                                        </div>
+
+                                        <div v-if="property.type == 'richtext'">
+                                            <textarea v-model="tvs[category][field]" v-ckeditor="tvs[category][field]" class="richtext"></textarea>
                                         </div>
 
                                         <div v-if="property.type == 'checkbox'">
@@ -192,6 +200,5 @@
 @endsection
 
 @section('scripts')
-    {{--<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>--}}
-    {{--<script>tinymce.init({ selector:'textarea' });</script>--}}
+    <script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
 @endsection
