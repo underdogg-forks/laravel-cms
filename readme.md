@@ -70,6 +70,10 @@ index: #template name
         type: textarea
         caption: Write a description
 
+    aboutMe:
+        type: richtext
+        caption: Write about yourself
+
     displaySection:
         type: checkbox
         caption: Display this section?
