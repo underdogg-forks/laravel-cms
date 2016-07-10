@@ -18967,6 +18967,9 @@ Vue.component('pages', {
                     this.storeOriginal(this.active);
                     window.location.href = '#/' + this.pages[i].id;
                     this.getTemplateVariableFields();
+
+                    var cid = $('[data-maincontent]').attr('id');
+                    CKEDITOR.instances[cid].setData(this.active.content);
                     break;
                 }
             }
@@ -19237,7 +19240,7 @@ Vue.directive('ckeditor', {
             var tempId = '';
             do {
                 tempId = makeid();
-            } while ($('#id').length);
+            } while ($('#' + tempId).length);
 
             this.el.id = tempId;
 
@@ -19250,7 +19253,7 @@ Vue.directive('ckeditor', {
                 editor.on('change', function (evt) {
                     that.set(evt.editor.getData());
                 });
-            }, 500);
+            }, 1500);
         }.bind(this));
     },
 

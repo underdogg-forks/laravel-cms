@@ -101,6 +101,9 @@ Vue.component('pages', {
                     this.storeOriginal(this.active);
                     window.location.href = '#/' + this.pages[i].id;
                     this.getTemplateVariableFields();
+
+                    var cid = $('[data-maincontent]').attr('id');
+                    CKEDITOR.instances[cid].setData(this.active.content);
                     break;
                 }
             }

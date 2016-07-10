@@ -77,7 +77,7 @@
 
                             <div class="form-group">
                                 <label>Content:</label>
-                                <textarea v-model="active.content" v-ckeditor="active.content" class="richtext"></textarea>
+                                <textarea v-model="active.content" v-ckeditor="active.content" class="richtext" data-maincontent></textarea>
                             </div>
                         </form>
 

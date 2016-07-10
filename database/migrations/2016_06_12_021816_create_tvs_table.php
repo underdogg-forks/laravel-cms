@@ -15,7 +15,7 @@ class CreateTvsTable extends Migration
         Schema::create('tvs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->longtext('value');
+            $table->longText('value');
             $table->integer('page_id')->unsigned();
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->timestamps();
