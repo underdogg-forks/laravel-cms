@@ -137,8 +137,9 @@ nav {
 
 @media screen and (min-width: 768px) {
   .side-navigation + .wrapper {
+    margin-top: 42px;
     margin-left: 250px;
     width: 75%;
-    margin-top: 42px;
+    padding: 25px 0;
   }
 }

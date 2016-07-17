@@ -18900,7 +18900,9 @@ Vue.component('pages', {
 
             pageErrors: [],
 
-            activeOriginal: {}
+            activeOriginal: {},
+
+            activeTab: ''
         };
     },
 
@@ -19007,10 +19009,17 @@ Vue.component('pages', {
                         tv = {};
                     }
 
+                    var first = true;
+
                     for (var category in this.templateVariables) {
                         if (this.templateVariables.hasOwnProperty(category)) {
                             if (typeof tv[category] === 'undefined') {
                                 tv[category] = {};
+
+                                if (first) {
+                                    this.activeTab = category;
+                                    first = false;
+                                }
 
                                 for (var field in this.templateVariables[category]) {
                                     if (this.templateVariables[category].hasOwnProperty(field)) {

@@ -663,9 +663,10 @@ nav {
 
 @media screen and (min-width: 768px) {
   .side-navigation + .wrapper {
+    margin-top: 42px;
     margin-left: 250px;
     width: 75%;
-    margin-top: 42px; } }
+    padding: 25px 0; } }
 
 .input-group {
   margin-top: 10px;
@@ -762,6 +763,20 @@ button.button {
     font-size: 16px;
     border-bottom: 1px solid #eaeaea; }
 
+.tabs {
+  border: 1px solid #eaeaea; }
+  .tabs .tabs__heading ul {
+    list-style: none;
+    border-bottom: 1px solid #eaeaea; }
+    .tabs .tabs__heading ul li {
+      display: inline-block;
+      padding: 10px;
+      border: 1px solid #eaeaea; }
+    .tabs .tabs__heading ul li.active {
+      background: #eaeaea; }
+  .tabs .tabs__content {
+    padding: 10px; }
+
 @media screen and (min-width: 768px) {
   .auth {
     height: 100%;
@@ -803,6 +818,22 @@ button.button {
     .index-page .recent-pages .panel__body ul li {
       padding: 10px; }
       .index-page .recent-pages .panel__body ul li:nth-child(odd) {
+        background: #f2f2f2; }
+
+.pages-page .template-variables {
+  margin-top: 25px; }
+  .pages-page .template-variables > h3 {
+    margin-bottom: 25px; }
+
+.pages-page .page-actions {
+  padding: 0; }
+  .pages-page .page-actions ul {
+    list-style: none;
+    width: 100%;
+    height: 100%; }
+    .pages-page .page-actions ul li {
+      padding: 10px; }
+      .pages-page .page-actions ul li:nth-child(odd) {
         background: #f2f2f2; }
 
 .cms-nav-pill .panel-body {

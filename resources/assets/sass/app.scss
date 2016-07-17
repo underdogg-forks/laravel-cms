@@ -5,10 +5,12 @@
 @import "components/forms";
 @import "components/buttons";
 @import "components/panel";
+@import "components/tabs";
 
 @import "pages/login";
 @import "pages/users";
 @import "pages/index";
+@import "pages/pages";
 
 .cms-nav-pill {
 	.panel-body {
