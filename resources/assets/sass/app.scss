@@ -1,11 +1,14 @@
+@import "components/variables";
 @import "components/reset";
-@import "components/auth";
-@import "components/users";
+@import "components/helpers";
+@import "components/navigation";
+@import "components/forms";
+@import "components/buttons";
+@import "components/panel";
 
-.wrapper {
-	width: 100%;
-	min-height: 100%;
-}
+@import "pages/login";
+@import "pages/users";
+@import "pages/index";
 
 .cms-nav-pill {
 	.panel-body {
@@ -22,8 +25,4 @@
 			border-left: 3px solid #4A90E2;
 		}
 	}
-}
-
-trix-editor {
-	height: 250px;
 }

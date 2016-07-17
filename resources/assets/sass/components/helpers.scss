@@ -1,0 +1,111 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.no-float {
+  float: none;
+}
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.clearfix {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// GRID
+
+.row::before,
+.row::after {
+  display: table;
+  content: " ";
+  clear: both;
+}
+
+.column, .columns {
+  position: relative;
+  float: left;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  @include clearfix;
+}
+
+@each $breakpoint, $width in $grid-breakpoints {
+  @media(min-width: $width) {
+    @if map-has-key($container-max-widths, $breakpoint) {
+      .container {
+        max-width: map-get($container-max-widths, $breakpoint);
+      }
+    }
+    @for $x from 1 through $columns {
+      .#{$breakpoint}-#{$x} {
+        width: calc(100% / 12 * #{$x});
+      }
+      .#{$breakpoint}-offset-#{$x} {
+        margin-left: calc(100% / 12 * #{$x});
+      }
+      .#{$breakpoint}-push-#{x} {
+        left: calc(100% / 12 * #{$x});
+      }
+      .#{$breakpoint}-pull-#{x} {
+        right: calc(100% / 12 * #{$x});
+      }
+    }
+  }
+}

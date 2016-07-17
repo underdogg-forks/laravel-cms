@@ -1,0 +1,144 @@
+nav {
+  width: 100%;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: #21C2A2;
+
+  .logo {
+    max-width: 30%;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 25px;
+  }
+
+  a {
+    color: white !important;
+    text-decoration: none;
+
+    &:hover {
+      color: black;
+    }
+  }
+
+
+  .hamburger {
+    cursor: pointer;
+    display: inline-block;
+    width: 65%;
+    text-align: right;
+    color: white;
+  }
+
+  .menu {
+    display: none;
+    list-style: none;
+    background: white;
+    z-index: 999;
+
+    li {
+      text-align: center;
+      padding: 10px 0;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+  }
+
+  .menu--open {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    display: block;
+    float: left;
+    width: 100%;
+    box-shadow: #2b2b2b 1px;
+  }
+
+  .menu--closed {
+    display: none;
+  }
+
+  .nav-wrapper {
+    @extend .container;
+    position: relative;
+  }
+}
+
+.nav--index {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+@media screen and (min-width: 1100px) {
+
+  nav {
+
+    .hamburger {
+      display: none;
+    }
+
+    .logo {
+      max-width: 170px;
+    }
+
+    .menu {
+      background: transparent;
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+
+      li {
+        padding: 0 10px;
+        display: inline;
+      }
+    }
+
+    .nav-wrapper {
+    }
+  }
+
+}
+
+.side-navigation {
+  width: 25%;
+  max-width: 250px;
+  height: 100%;
+  background: #3C505B;
+  color: white;
+  position: fixed;
+
+  ul {
+    list-style: none;
+
+    li {
+
+      a {
+        text-decoration: none;
+        display: block;
+        padding: 15px;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.8);
+      }
+    }
+  }
+}
+
+
+@media screen and (min-width: 768px) {
+  .side-navigation + .wrapper {
+    margin-left: 250px;
+    width: 75%;
+    margin-top: 42px;
+  }
+}

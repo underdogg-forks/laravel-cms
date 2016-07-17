@@ -1,0 +1,33 @@
+$sm-screen: 544px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+$primary: #34495e;
+
+$info-colors: (
+        primary: #21C2A2,
+        info: #1696B8,
+        success: #2ecc71,
+        warning: #f39c12,
+        danger: #A95151
+);
+
+$columns: 12;
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 544px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px
+);
+
+$container-max-widths: (
+        sm: 576px,
+        md: 720px,
+        lg: 940px,
+        xl: 1140px
+);
+
+$input-height: 34px;

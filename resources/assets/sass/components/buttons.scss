@@ -1,0 +1,27 @@
+.button {
+  padding: 10px 15px;
+  border-radius: 5px;
+
+  transition: 0.2s all ease;
+}
+
+@each $label, $color in $info-colors {
+  .button-#{$label}, a.button-#{$label} {
+    background: $color;
+    color: white;
+  }
+  .button-#{$label}-outline, a.button-#{$label}-outline {
+    border: 1px solid $color;
+    color: $color;
+
+    &:hover {
+      color: white;
+      background: $color;
+    }
+  }
+}
+
+button.button {
+  border-color: rgba(0, 0, 0, 0);
+  //background: rgba(0, 0, 0, 0);
+}

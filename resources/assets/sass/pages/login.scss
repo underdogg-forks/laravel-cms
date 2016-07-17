@@ -1,0 +1,16 @@
+.auth {
+
+}
+
+@media screen and (min-width: 768px) {
+  .auth {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > div {
+      width: 100%;
+    }
+  }
+}
