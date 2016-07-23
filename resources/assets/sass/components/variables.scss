@@ -3,10 +3,10 @@ $md-screen: 768px;
 $lg-screen: 992px;
 $xl-screen: 1200px;
 
-$primary: #34495e;
+$primary: #4285F4;
 
 $info-colors: (
-        primary: #21C2A2,
+        primary: $primary,
         info: #1696B8,
         success: #2ecc71,
         warning: #f39c12,

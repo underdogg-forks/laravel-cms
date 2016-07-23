@@ -7,29 +7,57 @@
 @section('content')
     <div class="container pages-page">
         <pages inline-template>
-            {{--<div class="col-md-4">--}}
-                {{--<div class="panel panel-default">--}}
-                    {{--<div class="panel-heading clearfix">--}}
-                        {{--Pages--}}
 
-                        {{--<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#newPage" class="pull-right" v-on:click="model.parent = active.id">--}}
-                            {{--New--}}
-                        {{--</button>--}}
-                    {{--</div>--}}
+            <div v-if="active.id == undefined">
+                <div class="panel">
+                    <div class="panel__heading">
+                        Pages
 
-                    {{--<div class="cms-nav-pill">--}}
-                        {{--<div class="panel-body">--}}
-                            {{--<div class="panel-body">--}}
-                                {{--<ul class="nav" role="tablist">--}}
-                                    {{--<li v-for="page in parentPages" role="presentation" v-bind:class="{ 'active': page.id == active.id }">--}}
-                                        {{--<a href="#" v-on:click="setActive(page.id)" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>--}}
-                                    {{--</li>--}}
-                                {{--</ul>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
+                        <a href="#" v-on:click.prevent="showNewPage = !showNewPage" class="right button button-info">New</a>
+                    </div>
+
+                    <div class="panel__body">
+                        <ul class="nav">
+                            <li v-for="page in parentPages" role="presentation" v-bind:class="{ 'active': page.id == active.id }">
+                                <a href="#" v-on:click.prevent="setActive(page.id)" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel" v-if="showNewPage">
+                    <div class="panel__heading">
+                        New Page
+                    </div>
+                    <div class="panel__body">
+                        <form v-on:submit.prevent="newPage()">
+                            <div class="input-group" v-bind:class="{'has-error': errors.name}">
+                                <label class="control-label" for="name" v-if="errors.name">@{{ errors.name }}</label>
+                                <input type="text" v-model="model.name" placeholder="Page Name" class="input" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="">Parent</label>
+                                <select class="input" v-model="model.parent" >
+                                    <option value="" selected></option>
+                                    <option v-for="page in pages" value="@{{ page.id }}">@{{ page.name }}</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group" v-bind:class="{'has-error': errors.template}">
+                                <label>Template</label>
+                                <select class="input" v-model="model.template" required>
+                                    <option v-for="template in templates" value="@{{ template }}">@{{ template }}</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel__footer">
+                        <button type="button" class="button button-primary" v-on:click="newPage()">Save changes</button>
+                    </div>
+                </div>
+
+            </div>
 
             <div v-if="active.id">
                 <div class="row">
@@ -116,8 +144,19 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-
+                        <div class="panel" v-if="active.children.length != 0">
+                            <div class="panel__heading">
+                                Child Pages
+                            </div>
+                            <div class="panel__body">
+                                <ul class="nav">
+                                    <li v-for="page in active.children" role="presentation">
+                                        <a href="#" v-on:click="setActive(page.id)" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
@@ -157,62 +196,7 @@
                     </div>
                 </div>
             </div>
-                {{--<div class="panel panel-default" v-if="active.children.length != 0">--}}
-                    {{--<div class="panel-heading">--}}
-                        {{--Child Pages--}}
-                    {{--</div>--}}
 
-                    {{--<div class="cms-nav-pill">--}}
-                        {{--<div class="panel-body">--}}
-                            {{--<div class="panel-body">--}}
-                                {{--<ul class="nav" role="tablist">--}}
-                                    {{--<li v-for="page in active.children" role="presentation">--}}
-                                        {{--<a href="#" v-on:click="setActive(page.id)" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>--}}
-                                    {{--</li>--}}
-                                {{--</ul>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-            <!-- Modal -->
-            {{--<div class="modal fade" id="newPage" tabindex="-1" role="dialog">--}}
-                {{--<div class="modal-dialog" role="document">--}}
-                    {{--<div class="modal-content">--}}
-                        {{--<div class="modal-header">--}}
-                            {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
-                            {{--<h4 class="modal-title" id="myModalLabel">New Page</h4>--}}
-                        {{--</div>--}}
-                        {{--<div class="modal-body">--}}
-                            {{--<form v-on:submit.prevent="newPage()">--}}
-                                {{--<div class="form-group" v-bind:class="{'has-error': errors.name}">--}}
-                                    {{--<label class="control-label" for="name" v-if="errors.name">@{{ errors.name }}</label>--}}
-                                    {{--<input type="text" v-model="model.name" placeholder="Page Name" class="form-control" required>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="form-group">--}}
-                                    {{--<label for="">Parent</label>--}}
-                                    {{--<select class="form-control" v-model="model.parent" >--}}
-                                        {{--<option value="" selected></option>--}}
-                                        {{--<option v-for="page in pages" value="@{{ page.id }}">@{{ page.name }}</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="form-group" v-bind:class="{'has-error': errors.template}">--}}
-                                    {{--<label class="control-label" for="template" v-if="errors.template">@{{ errors.template }}</label>--}}
-                                    {{--<select class="form-control" v-model="model.template" required>--}}
-                                        {{--<option v-for="template in templates" value="@{{ template }}">@{{ template }}</option>--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                            {{--</form>--}}
-                        {{--</div>--}}
-                        {{--<div class="modal-footer">--}}
-                            {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-                            {{--<button type="button" class="btn btn-primary" v-on:click="newPage()">Save changes</button>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
 
         </pages>
     </div>

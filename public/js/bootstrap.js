@@ -18902,7 +18902,9 @@ Vue.component('pages', {
 
             activeOriginal: {},
 
-            activeTab: ''
+            activeTab: '',
+
+            showNewPage: false
         };
     },
 
@@ -18947,7 +18949,7 @@ Vue.component('pages', {
                     this.errors = response.data.errors;
                 } else {
                     this.getPages();
-                    $('#newPage').modal('toggle');
+                    this.showNewPage = false;
                 }
             }.bind(this));
         },
@@ -19013,13 +19015,13 @@ Vue.component('pages', {
 
                     for (var category in this.templateVariables) {
                         if (this.templateVariables.hasOwnProperty(category)) {
+                            console.log(category);
+                            if (first) {
+                                this.activeTab = category;
+                                first = false;
+                            }
                             if (typeof tv[category] === 'undefined') {
                                 tv[category] = {};
-
-                                if (first) {
-                                    this.activeTab = category;
-                                    first = false;
-                                }
 
                                 for (var field in this.templateVariables[category]) {
                                     if (this.templateVariables[category].hasOwnProperty(field)) {
@@ -19129,7 +19131,8 @@ Vue.component('users', {
             active: {},
             userErrors: {},
             newUser: {},
-            modalErrors: {}
+            modalErrors: {},
+            showNewUser: false
         };
     },
 
@@ -19164,7 +19167,7 @@ Vue.component('users', {
                     this.modalErrors = response.data.errors;
                 } else {
                     this.getUsers();
-                    $('#newUser').modal('toggle');
+                    this.showNewUser = false;
                 }
             }.bind(this));
         },
@@ -19249,7 +19252,7 @@ Vue.directive('ckeditor', {
             var tempId = '';
             do {
                 tempId = makeid();
-            } while ($('#' + tempId).length);
+            } while (document.querySelectorAll('#' + tempId).length);
 
             this.el.id = tempId;
 
@@ -19262,7 +19265,7 @@ Vue.directive('ckeditor', {
                 editor.on('change', function (evt) {
                     that.set(evt.editor.getData());
                 });
-            }, 1500);
+            }, 250);
         }.bind(this));
     },
 

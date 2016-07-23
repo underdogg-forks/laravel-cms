@@ -4,18 +4,18 @@
     <div class="container-fluid">
         <themes inline-template>
 
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
+            <div class="column md-4">
+                <div class="panel">
+                    <div class="panel__heading">
                         Active Theme
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel__body">
                         <h1 class="text-center" style="margin-top:0;">@{{ activeTheme }}</h1>
 
-                        <div class="form-group">
+                        <div class="input-group">
                             <label>Change Theme</label>
-                            <select class="form-control" v-model="activeTheme" v-on:change="setActiveTheme()">
+                            <select class="input" v-model="activeTheme" v-on:change="setActiveTheme()">
                                 <option v-for="folder in folders" value="@{{ folder }}">@{{ folder }}</option>
                             </select>
                         </div>
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="column md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Theme Settings

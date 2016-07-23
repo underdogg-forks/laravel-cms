@@ -17,7 +17,7 @@ Vue.directive('ckeditor', {
             var tempId = '';
             do {
                 tempId = makeid();
-            } while ($('#' + tempId).length );
+            } while (document.querySelectorAll('#' + tempId).length );
 
             this.el.id = tempId;
 
@@ -30,7 +30,7 @@ Vue.directive('ckeditor', {
                 editor.on( 'change', function( evt ) {
                     that.set(evt.editor.getData());
                 });
-            }, 1500)
+            }, 250)
         }.bind(this));
     },
 

@@ -15,7 +15,8 @@ Vue.component('users', {
             active: {},
             userErrors: {},
             newUser: {},
-            modalErrors: {}
+            modalErrors: {},
+            showNewUser: false
         }
     },
 
@@ -55,7 +56,7 @@ Vue.component('users', {
                         this.modalErrors = response.data.errors;
                     } else {
                         this.getUsers();
-                        $('#newUser').modal('toggle');
+                        this.showNewUser = false;
                     }
                 }.bind(this));
         },

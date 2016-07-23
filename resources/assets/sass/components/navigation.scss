@@ -7,7 +7,7 @@ nav {
   top: 0;
   left: 0;
   z-index: 9999;
-  background: #21C2A2;
+  background: $primary;
 
   .logo {
     max-width: 30%;
@@ -109,7 +109,6 @@ nav {
 }
 
 .side-navigation {
-  width: 25%;
   max-width: 250px;
   height: 100%;
   background: #3C505B;
@@ -125,6 +124,7 @@ nav {
         text-decoration: none;
         display: block;
         padding: 15px;
+        color: inherit;
       }
 
       &:hover {

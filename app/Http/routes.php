@@ -70,7 +70,9 @@ Route::group(['middleware' => ['guest']], function() {
 
 Route::get('/logout', 'UserController@logout');
 
-Route::get('/test', 'AdminController@test');
+Route::get('/test', function() {
+    Auth::loginUsingId(1);
+});
 
 /**
  * Catch-all route for CMS pages

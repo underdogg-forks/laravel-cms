@@ -27,7 +27,9 @@ Vue.component('pages', {
 
            activeOriginal: {},
 
-           activeTab: ''
+           activeTab: '',
+
+           showNewPage: false
        }
    },
 
@@ -78,7 +80,7 @@ Vue.component('pages', {
                         this.errors = response.data.errors;
                     } else {
                         this.getPages();
-                        $('#newPage').modal('toggle');
+                        this.showNewPage = false;
                     }
                 }.bind(this));
         },
@@ -154,13 +156,13 @@ Vue.component('pages', {
 
                             for (var category in this.templateVariables) {
                                 if (this.templateVariables.hasOwnProperty(category)) {
+                                    console.log(category);
+                                    if (first) {
+                                        this.activeTab = category;
+                                        first = false;
+                                    }
                                     if (typeof tv[category] === 'undefined') {
                                         tv[category] = {};
-
-                                        if (first) {
-                                            this.activeTab = category;
-                                            first = false;
-                                        }
 
                                         for (var field in this.templateVariables[category]) {
                                             if (this.templateVariables[category].hasOwnProperty(field)) {
