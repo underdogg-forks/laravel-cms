@@ -82,6 +82,13 @@ class PageController extends Controller
         return successResponse('Retrieved pages', ['pages' => $pages]);
     }
 
+    public function edit($id)
+    {
+        $page = $this->pageModel->findOrFail($id);
+
+        return view('admin.page', compact('page'));
+    }
+
     /**
      * Stores a page in the DB
      *
@@ -111,7 +118,7 @@ class PageController extends Controller
             'parent_id' => $parent
         ]);
 
-        return successResponse('Page created', ['slug' => $page->slug]);
+        return successResponse('Page created', ['id' => $page->id]);
     }
 
     /**

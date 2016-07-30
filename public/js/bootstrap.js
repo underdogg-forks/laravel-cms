@@ -18875,12 +18875,11 @@ Vue.component('dashboard', {
 },{"chartist":1}],7:[function(require,module,exports){
 'use strict';
 
-Vue.component('pages', {
+Vue.component('page', {
     ready: function ready() {
-        this.prepareHash();
-        this.getPages();
-
-        window.onhashchange = this.handleHash;
+        this.active = window.NPAGE;
+        this.getTemplateVariableFields();
+        this.getTemplates();
     },
     data: function data() {
         return {
@@ -18909,96 +18908,24 @@ Vue.component('pages', {
     },
 
 
-    computed: {
-        parentPages: function parentPages() {
-            return this.pages.filter(function (item) {
-                return !item.child;
-            });
-        }
-    },
-
     methods: {
-        prepareHash: function prepareHash() {
-            if (window.location.hash) {
-                this.active.id = window.location.hash.substr(2);
-            } else {
-                window.location.href += "#/";
-            }
-        },
         isArray: function isArray(item) {
             return Array.isArray(item);
-        },
-        getPages: function getPages() {
-            this.$http.get('/pages').then(function (response) {
-                this.pages = response.data.pages;
-                if (typeof this.active.id != 'undefined') {
-                    this.setActive(this.active.id);
-                }
-                this.getTemplateVariableFields();
-                this.getTemplates();
-            }.bind(this));
         },
         getTemplates: function getTemplates() {
             this.$http.get('/templates').then(function (response) {
                 this.templates = response.data.templates;
             }.bind(this));
         },
-        newPage: function newPage() {
-            this.$http.post('/pages/new', this.model).then(function (response) {
-                if (response.data.status == 'error') {
-                    this.errors = response.data.errors;
-                } else {
-                    this.getPages();
-                    this.showNewPage = false;
-                }
-            }.bind(this));
-        },
         deletePage: function deletePage() {
             if (confirm('Really delete this page and ALL of its children?')) {
                 this.$http.post('/pages/' + this.active.id + '/delete').then(function (response) {
-                    this.active = {};
-                    this.getPages();
+                    window.location.href = '/admin/pages';
                 }.bind(this));
-            }
-        },
-        setActive: function setActive(id) {
-
-            //TODO: Check for changes
-
-            for (var i = 0; i < this.pages.length; i++) {
-                if (this.pages[i].id == id) {
-                    this.active = Vue.util.extend({}, this.pages[i]);
-                    this.storeOriginal(this.active);
-                    window.location.href = '#/' + this.pages[i].id;
-                    this.getTemplateVariableFields();
-
-                    var cid = $('[data-maincontent]').attr('id');
-                    var that = this;
-                    if (!this.active.markdown) {}
-                    break;
-                }
             }
         },
         storeOriginal: function storeOriginal(obj) {
             this.activeOriginal = Vue.util.extend({}, obj);
-        },
-        handleHash: function handleHash() {
-
-            //TODO: Check for changes
-
-            //for (var i = 0; i < this.pages.length; i++) {
-            //    if (this.pages[i].id == window.location.hash.substr(2)) {
-            //        this.active = this.pages[i];
-            //        this.getTemplateVariableFields();
-            //        break;
-            //    }
-            //}
-
-            this.setActive(window.location.hash.substr(2));
-
-            if (window.location.hash == '#/') {
-                this.active = {};
-            }
         },
         getTemplateVariableFields: function getTemplateVariableFields() {
             this.$http.post('/template-variables', { 'template': this.active.template }).then(function (response) {
@@ -19056,7 +18983,6 @@ Vue.component('pages', {
                         this.pageErrors = response.data.errors;
                     } else {
                         this.pageErrors = {};
-                        this.getPages();
                         if (changed) {
                             this.getTemplateVariableFields();
                         } else {
@@ -19071,7 +18997,6 @@ Vue.component('pages', {
         makeIndex: function makeIndex() {
             this.$http.post('/option/update', { 'option': 'indexPage', 'value': this.active.id }).then(function (response) {
                 this.active.isIndex = true;
-                this.getPages();
             }.bind(this));
         },
         swapEditor: function swapEditor(editor) {
@@ -19085,6 +19010,63 @@ Vue.component('pages', {
 });
 
 },{}],8:[function(require,module,exports){
+'use strict';
+
+Vue.component('pages', {
+    ready: function ready() {
+        this.getPages();
+    },
+    data: function data() {
+        return {
+            pages: [],
+            templates: [],
+            errors: [],
+            model: {
+                name: '',
+                template: ''
+            },
+
+            showNewPage: false
+        };
+    },
+
+
+    computed: {
+        parentPages: function parentPages() {
+            return this.pages.filter(function (item) {
+                return !item.child;
+            });
+        }
+    },
+
+    methods: {
+        isArray: function isArray(item) {
+            return Array.isArray(item);
+        },
+        getPages: function getPages() {
+            this.$http.get('/pages').then(function (response) {
+                this.pages = response.data.pages;
+                this.getTemplates();
+            }.bind(this));
+        },
+        getTemplates: function getTemplates() {
+            this.$http.get('/templates').then(function (response) {
+                this.templates = response.data.templates;
+            }.bind(this));
+        },
+        newPage: function newPage() {
+            this.$http.post('/pages/new', this.model).then(function (response) {
+                if (response.data.status == 'error') {
+                    this.errors = response.data.errors;
+                } else {
+                    window.location.href = '/admin/pages/' + response.data.id;
+                }
+            }.bind(this));
+        }
+    }
+});
+
+},{}],9:[function(require,module,exports){
 'use strict';
 
 Vue.component('themes', {
@@ -19119,7 +19101,7 @@ Vue.component('themes', {
     }
 });
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 Vue.component('users', {
@@ -19213,7 +19195,7 @@ Vue.component('users', {
     }
 });
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 var Vue = require('vue');
@@ -19232,6 +19214,7 @@ require('./register');
 
 require('./admin/dashboard');
 require('./admin/pages');
+require('./admin/page');
 require('./admin/themes');
 require('./admin/users');
 
@@ -19239,7 +19222,7 @@ new Vue({
     el: 'body'
 });
 
-},{"./admin/dashboard":6,"./admin/pages":7,"./admin/themes":8,"./admin/users":9,"./directives/ckeditor":11,"./login":12,"./register":13,"vue":5,"vue-resource":3,"vue-router":4}],11:[function(require,module,exports){
+},{"./admin/dashboard":6,"./admin/page":7,"./admin/pages":8,"./admin/themes":9,"./admin/users":10,"./directives/ckeditor":12,"./login":13,"./register":14,"vue":5,"vue-resource":3,"vue-router":4}],12:[function(require,module,exports){
 "use strict";
 
 function makeid() {
@@ -19305,7 +19288,7 @@ Vue.directive('simplemde', {
     }
 });
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 Vue.component('login', {
@@ -19333,7 +19316,7 @@ Vue.component('login', {
     }
 });
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 Vue.component('register', {
@@ -19364,6 +19347,6 @@ Vue.component('register', {
     }
 });
 
-},{}]},{},[10]);
+},{}]},{},[11]);
 
 //# sourceMappingURL=bootstrap.js.map

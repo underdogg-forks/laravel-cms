@@ -14,6 +14,7 @@ require('./register');
 
 require('./admin/dashboard');
 require('./admin/pages');
+require('./admin/page');
 require('./admin/themes');
 require('./admin/users');
 

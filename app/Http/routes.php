@@ -9,6 +9,7 @@ Route::group(['middleware' => ['auth']], function() {
      */
     Route::group(['prefix' => 'admin'], function() {
         Route::get('pages', 'AdminController@getPages');
+        Route::get('pages/{id}', 'PageController@edit');
         Route::get('themes', 'AdminController@getThemes');
         Route::get('users', 'AdminController@getUsers');
     });
