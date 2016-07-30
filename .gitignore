@@ -9,3 +9,4 @@ Homestead.json
 public/themes/*
 
 !public/themes/default
+storage/site/config.yaml
