@@ -97,7 +97,7 @@ class PageController extends Controller
     public function create()
     {
         $validate = validateAjaxForm($this->request->all(), [
-            'name' => 'required|unique:pages',
+            'name' => 'required',
             'template' => 'required'
         ]);
 
@@ -109,7 +109,12 @@ class PageController extends Controller
 
         $parent = empty($this->request->parent) ? null : $this->request->parent;
 
-        $slug = $slugify->slugify($this->request->name);
+        $pagesWithSameName = $this->pageModel->whereName($this->request->name)->where('parent_id', $parent)->get();
+
+        // Append number to the end of the slug if there are matching posts with the same name under the same parent
+        $extraSlug = $pagesWithSameName->count() != 0 ? '-' . ($pagesWithSameName->count() + 1) : '';
+
+        $slug = $slugify->slugify($this->request->name . $extraSlug);
 
         $page = $this->pageModel->create([
             'name' => $this->request->name,
@@ -203,10 +208,6 @@ class PageController extends Controller
         }
 
         $errors = [];
-
-        if ($this->pageModel->whereName($this->request->name)->exists() && $this->request->name != $page->name) {
-            $errors['name'] = 'Name in use';
-        }
 
         if (
             ($page->parent()->count() && $this->pageModel->whereSlug($this->request->slug)->where('parent_id', '=', $page->parent->id)->exists() && $page->slug != $this->request->slug)

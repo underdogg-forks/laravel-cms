@@ -36,13 +36,13 @@
                                 </select>
                             </div>
 
-                            <div class="form-group" v-if="!active.markdown">
+                            <div class="form-group" v-show="!active.markdown">
                                 <label>Content:</label>
                                 <textarea v-model="active.content" v-ckeditor="active.content" class="richtext" data-maincontent></textarea>
                                 <button class="button button-primary" v-on:click.prevent="swapEditor('markdown')">Switch to Markdown</button>
                             </div>
 
-                            <div class="form-group" v-if="active.markdown">
+                            <div class="form-group" v-show="active.markdown">
                                 <label for="content">Content (Markdown):</label>
                                 <textarea class="input" v-model="active.content" v-simplemde="active.content"></textarea>
                                 <button class="button button-primary" v-on:click.prevent="swapEditor('richtext')">Switch to RichText</button>

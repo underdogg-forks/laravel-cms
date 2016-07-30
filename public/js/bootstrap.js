@@ -19242,7 +19242,7 @@ Vue.directive('ckeditor', {
             var tempId = '';
             do {
                 tempId = makeid();
-            } while (document.querySelectorAll('#' + tempId).length);
+            } while ($('#' + tempId).length);
 
             this.el.id = tempId;
 
@@ -19270,7 +19270,7 @@ Vue.directive('simplemde', {
             var tempId = '';
             do {
                 tempId = makeid();
-            } while (document.querySelectorAll('#' + tempId).length);
+            } while ($('#' + tempId).length);
 
             this.el.id = tempId;
 
