@@ -3,11 +3,14 @@ nav {
   height: auto;
   padding-top: 10px;
   padding-bottom: 10px;
-  position: fixed;
   top: 0;
   left: 0;
   z-index: 9999;
   background: $primary;
+
+  @media screen and (min-width: 768px) {
+    position: fixed;
+  }
 
   .logo {
     max-width: 30%;
@@ -109,11 +112,16 @@ nav {
 }
 
 .side-navigation {
-  max-width: 250px;
-  height: 100%;
+  width: 100%;
   background: #3C505B;
   color: white;
-  position: fixed;
+
+  @media screen and (min-width: 768px) {
+    width: auto;
+    max-width: 250px;
+    height: 100%;
+    position: fixed;
+  }
 
   ul {
     list-style: none;
@@ -138,7 +146,7 @@ nav {
 @media screen and (min-width: 768px) {
   .side-navigation + .wrapper {
     margin-top: 42px;
-    margin-left: 250px;
+    margin-left: 150px;
     width: 75%;
     padding: 25px 0;
   }

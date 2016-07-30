@@ -578,11 +578,13 @@ nav {
   height: auto;
   padding-top: 10px;
   padding-bottom: 10px;
-  position: fixed;
   top: 0;
   left: 0;
   z-index: 9999;
   background: #4285F4; }
+  @media screen and (min-width: 768px) {
+    nav {
+      position: fixed; } }
   nav .logo {
     max-width: 30%;
     height: auto;
@@ -646,11 +648,15 @@ nav {
       display: inline; } }
 
 .side-navigation {
-  max-width: 250px;
-  height: 100%;
+  width: 100%;
   background: #3C505B;
-  color: white;
-  position: fixed; }
+  color: white; }
+  @media screen and (min-width: 768px) {
+    .side-navigation {
+      width: auto;
+      max-width: 250px;
+      height: 100%;
+      position: fixed; } }
   .side-navigation ul {
     list-style: none; }
     .side-navigation ul li a {
@@ -664,7 +670,7 @@ nav {
 @media screen and (min-width: 768px) {
   .side-navigation + .wrapper {
     margin-top: 42px;
-    margin-left: 250px;
+    margin-left: 150px;
     width: 75%;
     padding: 25px 0; } }
 
