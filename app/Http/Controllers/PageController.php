@@ -122,6 +122,8 @@ class PageController extends Controller
      */
     public function show($slug)
     {
+        $page = null;
+
         if ($slug == '/') {
             $page = $this->pageModel->find(getSiteOption('indexPage'));
         } else {
@@ -137,14 +139,14 @@ class PageController extends Controller
              * Loops through each of the matching pages parent, building a url
              * if the page + parents slugs don't make a URL that matches the one in the request, abort
              */
-            foreach ($pages as $page) {
+            foreach ($pages as $p) {
                 if (!$found) {
                     // If the page has parents, build out the full slug
-                    if ($page->parent()->count()) {
-                        $this->getParentSlug($page->parent);
+                    if ($p->parent()->count()) {
+                        $this->getParentSlug($p->parent);
                     }
 
-                    $this->pageSlug .= $page->slug;
+                    $this->pageSlug .= $p->slug;
 
                     // not a match, try again
                     if ($this->pageSlug != implode('/', $url)) {
@@ -152,6 +154,7 @@ class PageController extends Controller
                         continue;
                     } else {
                         $found = true;
+                        $page = $p;
                     }
                 } else {
                     break;
@@ -217,7 +220,7 @@ class PageController extends Controller
         }
 
         if (
-            ($page->parent()->count() && $this->pageModel->whereSlug($this->request->slug)->where('parent_id', '=', $page->parent->id)->exists())
+            ($page->parent()->count() && $this->pageModel->whereSlug($this->request->slug)->where('parent_id', '=', $page->parent->id)->exists() && $page->slug != $this->request->slug)
         || (!$page->parent()->count() && $this->pageModel->whereSlug($this->request->slug)->where('parent_id', '=', null)->exists() && $page->slug != $this->request->slug)
         )
         {

@@ -70,7 +70,11 @@ class ThemeController extends Controller
      */
     public function getListOfTemplateVariables()
     {
-        $config = Yaml::parse(file_get_contents(base_path() . themePath() . '/variables.yaml'));
+        if (file_exists(base_path() . themePath() . '/variables.yaml')) {
+            $config = Yaml::parse(file_get_contents(base_path() . themePath() . '/variables.yaml'));
+        } else {
+            return errorResponse('Template variable file does not exist');
+        }
 
         $categories = [];
 
