@@ -64,6 +64,11 @@ class Page extends Model
         return $this->parent()->with('allParents');
     }
 
+    /**
+     * Returns full permalink
+     *
+     * @return string
+     */
     public function permalink()
     {
         $permalink = '';

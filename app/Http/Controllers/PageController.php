@@ -133,37 +133,19 @@ class PageController extends Controller
             // Get all pages with the matching last slug
             $pages = $this->pageModel->whereSlug($url[sizeof($url) - 1])->get();
 
-            $found = false;
-
-            /**
-             * Loops through each of the matching pages parent, building a url
-             * if the page + parents slugs don't make a URL that matches the one in the request, abort
-             */
             foreach ($pages as $p) {
-                if (!$found) {
-                    // If the page has parents, build out the full slug
-                    if ($p->parent()->count()) {
-                        $this->getParentSlug($p->parent);
-                    }
-
-                    $this->pageSlug .= $p->slug;
-
-                    // not a match, try again
-                    if ($this->pageSlug != implode('/', $url)) {
-                        $this->pageSlug = '';
-                        continue;
-                    } else {
-                        $found = true;
-                        $page = $p;
-                    }
+                // not a match, try again
+                if ($p->permalink() != $slug) {
+                    continue;
                 } else {
+                    $page = $p;
                     break;
                 }
             }
+        }
 
-            if (!$found) {
-                abort(404);
-            }
+        if (!$page) {
+            abort(404);
         }
 
         if ($page->markdown) {
@@ -254,24 +236,6 @@ class PageController extends Controller
         $page->delete();
 
         return successResponse('Page deleted');
-    }
-
-    /**
-     * Builds out the slug of all parent pages
-     *
-     * @param $parent
-     */
-    private function getParentSlug($parent) {
-        if ($parent->parent()->count()) {
-            $this->pageSlug .= $parent->slug . '/';
-            $this->getParentSlug($parent->parent);
-        } else {
-            $this->pageSlug .= $parent->slug;
-
-            $temp = explode('/', $this->pageSlug);
-
-            $this->pageSlug = implode('/', array_reverse($temp)) . '/';
-        }
     }
 
     /**
