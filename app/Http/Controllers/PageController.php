@@ -84,7 +84,12 @@ class PageController extends Controller
 
     public function edit($id)
     {
+        $indexPage = getSiteOption('indexPage');
+
         $page = $this->pageModel->findOrFail($id);
+        $page->child = !empty($page->parent());
+        $page->permalink = $page->permalink();
+        $page->isIndex = ($page->id == $indexPage) ? true : false;
 
         return view('admin.page', compact('page'));
     }
