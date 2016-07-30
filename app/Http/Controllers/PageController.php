@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Redis\Database as Redis;
 
 use Symfony\Component\Yaml\Yaml;
+use Parsedown;
 
 class PageController extends Controller
 {
@@ -160,6 +161,10 @@ class PageController extends Controller
             if (!$found) {
                 abort(404);
             }
+        }
+
+        if ($page->markdown) {
+            $page->content = Parsedown::instance()->setMarkupEscaped(false)->text($page->content);
         }
 
         // Grab the TVs for this page

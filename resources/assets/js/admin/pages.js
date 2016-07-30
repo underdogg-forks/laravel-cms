@@ -107,8 +107,11 @@ Vue.component('pages', {
                     this.getTemplateVariableFields();
 
                     var cid = $('[data-maincontent]').attr('id');
-                    CKEDITOR.instances[cid].setData(this.active.content);
-                    break;
+                    var that = this;
+                    if (!this.active.markdown) {
+
+                    }
+                        break;
                 }
             }
 
@@ -156,7 +159,6 @@ Vue.component('pages', {
 
                             for (var category in this.templateVariables) {
                                 if (this.templateVariables.hasOwnProperty(category)) {
-                                    console.log(category);
                                     if (first) {
                                         this.activeTab = category;
                                         first = false;
@@ -221,6 +223,14 @@ Vue.component('pages', {
                     this.active.isIndex = true;
                    this.getPages();
                 }.bind(this));
+        },
+
+        swapEditor(editor) {
+            if (editor == 'markdown') {
+                this.active.markdown = true;
+            } else {
+                this.active.markdown = false;
+            }
         }
     }
 });

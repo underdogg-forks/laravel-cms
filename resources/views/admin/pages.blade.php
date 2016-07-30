@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 
 @endsection
 
@@ -79,14 +80,21 @@
                             </div>
                             <div class="input-group" v-bind:class="{'has-error': pageErrors.template}">
                                 <label>Template:</label>
-                                <select type="text" v-model="active.template" class="input">
+                                <select v-model="active.template" class="input">
                                     <option v-for="template in templates" value="@{{ template }}">@{{ template }}</option>
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" v-if="!active.markdown">
                                 <label>Content:</label>
                                 <textarea v-model="active.content" v-ckeditor="active.content" class="richtext" data-maincontent></textarea>
+                                <button class="button button-primary" v-on:click.prevent="swapEditor('markdown')">Switch to Markdown</button>
+                            </div>
+
+                            <div class="form-group" v-if="active.markdown">
+                                <label for="content">Content (Markdown):</label>
+                                <textarea class="input" v-model="active.content" v-simplemde="active.content"></textarea>
+                                <button class="button button-primary" v-on:click.prevent="swapEditor('richtext')">Switch to RichText</button>
                             </div>
                         </form>
 
@@ -153,7 +161,7 @@
                             <div class="panel__body">
                                 <ul class="nav">
                                     <li v-for="page in active.children" role="presentation">
-                                        <a href="#" v-on:click="setActive(page.id)" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>
+                                        <a href="#" v-on:click.prevent="setActive(page.id)" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -204,4 +212,5 @@
 
 @section('scripts')
     <script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 @endsection

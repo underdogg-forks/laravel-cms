@@ -18973,7 +18973,8 @@ Vue.component('pages', {
                     this.getTemplateVariableFields();
 
                     var cid = $('[data-maincontent]').attr('id');
-                    CKEDITOR.instances[cid].setData(this.active.content);
+                    var that = this;
+                    if (!this.active.markdown) {}
                     break;
                 }
             }
@@ -19015,7 +19016,6 @@ Vue.component('pages', {
 
                     for (var category in this.templateVariables) {
                         if (this.templateVariables.hasOwnProperty(category)) {
-                            console.log(category);
                             if (first) {
                                 this.activeTab = category;
                                 first = false;
@@ -19073,6 +19073,13 @@ Vue.component('pages', {
                 this.active.isIndex = true;
                 this.getPages();
             }.bind(this));
+        },
+        swapEditor: function swapEditor(editor) {
+            if (editor == 'markdown') {
+                this.active.markdown = true;
+            } else {
+                this.active.markdown = false;
+            }
         }
     }
 });
@@ -19270,6 +19277,32 @@ Vue.directive('ckeditor', {
     },
 
     unbind: function unbind() {}
+});
+
+Vue.directive('simplemde', {
+    twoWay: true,
+
+    bind: function bind() {
+        $(document).ready(function () {
+            var tempId = '';
+            do {
+                tempId = makeid();
+            } while (document.querySelectorAll('#' + tempId).length);
+
+            this.el.id = tempId;
+
+            var that = this;
+
+            setTimeout(function () {
+                // Needs to be wrapped in a setTimeout or else the textarea isnt ready yet... weird.
+                var editor = new SimpleMDE({ element: document.getElementById(tempId) });
+
+                editor.codemirror.on('change', function () {
+                    that.set(editor.value());
+                });
+            }, 250);
+        }.bind(this));
+    }
 });
 
 },{}],12:[function(require,module,exports){
