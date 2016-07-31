@@ -46,7 +46,8 @@ class AdminController extends Controller
      */
     public function getPages()
     {
-        return view('admin.pages');
+        $pages = $this->pageModel->where('parent_id', null)->latest()->get();
+        return view('admin.pages', compact('pages'));
     }
 
     /**

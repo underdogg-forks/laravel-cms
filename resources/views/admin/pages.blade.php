@@ -8,6 +8,22 @@
     <div class="container pages-page">
         <pages inline-template>
 
+                {{--<div class="panel">--}}
+                    {{--<div class="panel__heading">--}}
+                        {{--Pages--}}
+
+                        {{--<a href="#" v-on:click.prevent="showNewPage = !showNewPage" class="right button button-info">New</a>--}}
+                    {{--</div>--}}
+
+                    {{--<div class="panel__body">--}}
+                        {{--<ul class="nav">--}}
+                            {{--<li v-for="page in pages" role="presentation">--}}
+                                {{--<a href="/admin/pages/@{{ page.id }}" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+
                 <div class="panel">
                     <div class="panel__heading">
                         Pages
@@ -17,9 +33,9 @@
 
                     <div class="panel__body">
                         <ul class="nav">
-                            <li v-for="page in pages" role="presentation">
-                                <a href="/admin/pages/@{{ page.id }}" role="tab" data-toggle="tab" aria-controls="pages">@{{ page.name }}</a>
-                            </li>
+                            @foreach ($pages as $page)
+                                @include('admin.li', ['child' => $page])
+                            @endforeach
                         </ul>
                     </div>
                 </div>
