@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use Cocur\Slugify\Slugify;
+use Cache;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Redis\Database as Redis;
 
 use Symfony\Component\Yaml\Yaml;
 use Parsedown;
@@ -39,25 +39,18 @@ class PageController extends Controller
     private $pageSlug;
 
     /**
-     * @var Redis
-     */
-    private $redis;
-
-    /**
      * PageController constructor.
      *
      * @param Page $pageModel
      * @param Request $request
      * @param TV $tvModel
-     * @param Redis $redis
      */
-    public function __construct(Page $pageModel, Request $request, TV $tvModel, Redis $redis)
+    public function __construct(Page $pageModel, Request $request, TV $tvModel)
     {
         $this->pageModel = $pageModel;
         $this->request = $request;
         $this->tvModel = $tvModel;
         $this->pageSlug = '';
-        $this->redis = $redis;
     }
 
     /**
@@ -183,11 +176,11 @@ class PageController extends Controller
         // Increment page view in redis
         $redisKey = 'page:' . $page->id . ':views';
 
-        if (!$this->redis->exists($redisKey)) {
-            $this->redis->set($redisKey, 0);
+        if (!Cache::has($redisKey)) {
+            Cache::forever($redisKey, $page->views, 10);
         }
 
-        $this->redis->incr($redisKey);
+        Cache::increment($redisKey);
 
         return view(themef() . 'templates.' . $page->template, compact('tvs', 'page'));
     }
