@@ -21,6 +21,9 @@
 
 			<ul class="menu">
                 @if (Auth::check())
+                    <li><a href="/admin/pages">Pages</a></li>
+                    <li><a href="/admin/themes">Themes</a></li>
+                    <li><a href="/admin/users">Users</a></li>
                    <li><a href="/logout">Logout</a></li>
                 @else
                     <li><a href="/login">Login</a></li>
@@ -29,16 +32,6 @@
 
 		</div>
 	</nav>
-
-    @if (Auth::check())
-    <aside class="side-navigation">
-        <ul>
-            <li><a href="/admin/pages">Pages</a></li>
-            <li><a href="/admin/themes">Themes</a></li>
-            <li><a href="/admin/users">Users</a></li>
-        </ul>
-    </aside>
-    @endif
 
     <div class="wrapper">
         @yield('content')

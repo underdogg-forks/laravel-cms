@@ -6,10 +6,11 @@ nav {
   top: 0;
   left: 0;
   z-index: 9999;
-  background: $primary;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  margin-bottom: 25px;
 
   @media screen and (min-width: 768px) {
-    position: fixed;
+    //position: fixed;
   }
 
   .logo {
@@ -21,11 +22,11 @@ nav {
   }
 
   a {
-    color: white !important;
+    color: black !important;
     text-decoration: none;
 
     &:hover {
-      color: black;
+      color: rgba(0, 0, 0, 0.8);
     }
   }
 

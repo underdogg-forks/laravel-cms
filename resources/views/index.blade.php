@@ -27,7 +27,7 @@
                             <ul>
                                 @foreach($pages as $page)
                                 <li>
-                                    <a href="/admin/pages#/{{ $page->id }}" role="tab" aria-controls="pages">{{ $page->name }}</a>
+                                    <a href="/admin/pages/{{ $page->id }}" role="tab" aria-controls="pages">{{ $page->name }}</a>
                                 </li>
                                 @endforeach
                             </ul>

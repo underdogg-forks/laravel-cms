@@ -581,10 +581,8 @@ nav {
   top: 0;
   left: 0;
   z-index: 9999;
-  background: #4285F4; }
-  @media screen and (min-width: 768px) {
-    nav {
-      position: fixed; } }
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  margin-bottom: 25px; }
   nav .logo {
     max-width: 30%;
     height: auto;
@@ -592,10 +590,10 @@ nav {
     vertical-align: middle;
     padding-right: 25px; }
   nav a {
-    color: white !important;
+    color: black !important;
     text-decoration: none; }
     nav a:hover {
-      color: black; }
+      color: rgba(0, 0, 0, 0.8); }
   nav .hamburger {
     cursor: pointer;
     display: inline-block;

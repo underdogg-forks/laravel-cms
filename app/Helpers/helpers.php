@@ -94,7 +94,8 @@ function permalink($id)
  * @param $parent
  * @param $slug
  */
-function getParentSlug($parent, &$slug) {
+function getParentSlug($parent, &$slug)
+{
     if ($parent->parent()->count()) {
         $slug .= $parent->slug . '/';
         getParentSlug($parent->parent, $slug);
@@ -105,4 +106,9 @@ function getParentSlug($parent, &$slug) {
 
         $slug = implode('/', array_reverse($temp)) . '/';
     }
+}
+
+function getPage($id)
+{
+    return Page::findOrFail($id);
 }
