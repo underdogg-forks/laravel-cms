@@ -11,7 +11,7 @@ class Page extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug', 'template', 'content', 'parent_id', 'views', 'markdown'
+        'name', 'slug', 'template', 'content', 'parent_id', 'views', 'markdown', 'status'
     ];
 
     /**
@@ -99,5 +99,27 @@ class Page extends Model
 
             $link = implode('/', array_reverse($temp)) . '/';
         }
+    }
+
+    /**
+     * Return published posts
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
+    /**
+     * Return drafts
+     * 
+     * @param $query
+     * @return mixed
+     */
+    public function scopeDrafts($query)
+    {
+        return $query->where('status', 'draft');
     }
 }

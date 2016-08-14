@@ -158,6 +158,10 @@ class PageController extends Controller
             abort(404);
         }
 
+        if ($page->status != 'published') {
+            abort(404);
+        }
+
         if ($page->markdown) {
             $page->content = Parsedown::instance()->setMarkupEscaped(false)->text($page->content);
         }

@@ -19005,6 +19005,9 @@ Vue.component('page', {
             } else {
                 this.active.markdown = false;
             }
+        },
+        changeStatus: function changeStatus(status) {
+            this.active.status = status;
         }
     }
 });

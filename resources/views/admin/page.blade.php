@@ -138,9 +138,21 @@
                                         </a>
                                     </li>
 
-                                    <li>
+                                    <li v-if="active.status != 'draft'">
                                         <a href="/@{{ active.permalink }}" target="_blank">
                                             View
+                                        </a>
+                                    </li>
+
+                                    <li v-if="active.status == 'published'">
+                                        <a href="#" v-on:click.prevent="changeStatus('draft')">
+                                            Make Draft
+                                        </a>
+                                    </li>
+
+                                    <li v-if="active.status == 'draft'">
+                                        <a href="#" v-on:click.prevent="changeStatus('published')">
+                                            Publish
                                         </a>
                                     </li>
 

@@ -145,6 +145,10 @@ Vue.component('page', {
             } else {
                 this.active.markdown = false;
             }
+        },
+
+        changeStatus(status) {
+            this.active.status = status;
         }
     }
 });
